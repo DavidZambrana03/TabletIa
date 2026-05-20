@@ -1,0 +1,93 @@
+﻿<style>
+    .round-button {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    width: 5vw;
+    height: 8vh;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    transition: background 0s ease, transform 0s ease, box-shadow 0s ease;
+    will-change: transform, background, box-shadow; /* Hint to browser for optimization */
+}
+
+    .round-button.pressed {
+        background: #e0e0e0;
+        transform: translateY(2px);
+        box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<button @attributes="AdditionalAttributes"
+        class="@CssClass"
+        @onpointerdown="HandleLocalPointerDown"
+        @onpointerup="HandleLocalPointerUp"
+        @onpointerleave="HandleLocalPointerLeave"
+        @onclick="HandleLocalClick">
+    @ChildContent
+</button>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    // Define EventCallback parameters for users of the component
+    // These match the non-generic style of your original OnClick and usage
+    [Parameter] public EventCallback OnUserPointerDown { get; set; }
+    [Parameter] public EventCallback OnUserPointerUp { get; set; }
+    [Parameter] public EventCallback OnUserPointerLeave { get; set; }
+    [Parameter] public EventCallback OnUserClick { get; set; } // Renamed from OnClick for clarity if needed, or keep as OnClick
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private bool isPressed = false;
+    private string CssClass => isPressed ? "round-button pressed" : "round-button";
+
+    // Internal handlers now also invoke the user's callbacks
+    private async Task HandleLocalPointerDown(PointerEventArgs e)
+    {
+        isPressed = true;
+        if (OnUserPointerDown.HasDelegate)
+        {
+            await OnUserPointerDown.InvokeAsync(); // Invokes the callback passed by the parent
+        }
+    }
+
+    private async Task HandleLocalPointerUp(PointerEventArgs e)
+    {
+        isPressed = false;
+        if (OnUserPointerUp.HasDelegate)
+        {
+            await OnUserPointerUp.InvokeAsync();
+        }
+    }
+
+    private async Task HandleLocalPointerLeave(PointerEventArgs e)
+    {
+        // Assuming 'leave' should also visually 'release' the button
+        isPressed = false;
+        if (OnUserPointerLeave.HasDelegate)
+        {
+            await OnUserPointerLeave.InvokeAsync();
+        }
+    }
+
+    private async Task HandleLocalClick(MouseEventArgs e)
+    {
+        // The original OnClick parameter was named "OnClick".
+        // If you rename it to OnUserClick as above, use that here.
+        // If you keep it as "OnClick", ensure it's used correctly.
+        // For this example, using OnUserClick.
+        if (OnUserClick.HasDelegate)
+        {
+            await OnUserClick.InvokeAsync();
+        }
+    }
+}

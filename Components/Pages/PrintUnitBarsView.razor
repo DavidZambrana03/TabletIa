@@ -1,0 +1,498 @@
+﻿@page "/pages/PrintUnitBarsView"
+@inject ReadDTOService ReadDTO
+@inject OpcUaClient opcUaClient
+@inject IJSRuntime JS
+@using Serilog
+
+<style>
+    .module_big {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: white;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        transition: transform 1s ease;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .toggle-buttons {
+        display: flex;
+        justify-content: center; /* Aligns buttons to the left */
+        gap: 10px; /* Adds spacing between buttons */
+        padding: 10px; /* Adds some spacing around */
+    }
+
+        .toggle-buttons button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none; /* Remove border */
+            background: none; /* Remove background */
+            color: black; /* Default text color */
+            cursor: pointer;
+            transition: border-bottom 0s, color 0.3s;
+        }
+
+            .toggle-buttons button.active {
+                border-bottom: 3px solid black; /* Green underline when active */
+                color: black; /* Optional: Change text color when active */
+            }
+
+    /* Contenedor del panel - Estrecho y centrado */
+    .header-panel-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto 10px auto;
+        background: white;
+        border: 2px solid #3b82f6;
+        border-radius: 0 12px 12px 12px;
+        padding: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .tool-tab {
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        width: 32px;
+        height: 32px;
+        background: #3b82f6;
+        border-radius: 8px 0 8px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        z-index: 10;
+    }
+
+    .tabs-row {
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tab-item {
+        flex: 1;
+        padding: 12px 0;
+        text-align: center;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        color: #111827;
+        position: relative;
+        transition: color 0.2s;
+    }
+
+        .tab-item.active {
+            color: #3b82f6;
+        }
+
+            .tab-item.active::after {
+                content: "";
+                position: absolute;
+                bottom: -1px;
+                left: 20%;
+                width: 60%;
+                height: 3px;
+                background: #3b82f6;
+                border-radius: 3px 3px 0 0;
+            }
+
+    .actions-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        flex-wrap: wrap;
+    }
+
+    .height-control-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f3f4f6;
+        padding: 4px 12px;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+    }
+
+    .height-value {
+        font-weight: 700;
+        font-size: 16px;
+        min-width: 70px;
+        text-align: center;
+        color: #1f2937;
+    }
+
+    .action-btn-styled {
+        box-sizing: border-box;
+        background: #FFFFFF;
+        border: 2px solid #000000;
+        border-radius: 10px;
+        padding: 6px 16px;
+        font-weight: 600;
+        font-size: 15px;
+        color: #000000;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-width: 90px;
+    }
+
+    .btn-circle {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: 50%;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .action-btn-styled:hover {
+        background: #f3f4f6;
+    }
+
+    .action-btn-styled:active {
+        transform: translateY(1px);
+        background: #e5e7eb;
+    }
+
+    /* Lista de Unidades */
+    .units-horizontal-list {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        padding: 10px;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-x: auto;
+        width: 100%;
+        max-width: 850px;
+    }
+
+    /* Cada unidad individual */
+    .unit-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 150px;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Fila para Círculo y Toggle */
+    .controls-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    /* Círculo de color */
+    .color-circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 1.3rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    /* Switch de encendido */
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 26px;
+    }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 26px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    input:checked + .slider {
+        background-color: #000;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+    .state-text {
+        font-size: 11px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #4b5563;
+        margin-top: 2px;
+        margin-bottom: 0px;
+    }
+
+    /* Contenedor de la barra - Margen solicitado de -30px */
+    .unit-container {
+        position: relative;
+        width: 130px;
+        height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0px;
+    }
+
+    .unit-image {
+        max-width: 320px;
+        max-height: 120px;
+        object-fit: contain;
+        transform: rotate(90deg);
+        display: block;
+    }
+
+    .section_header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px;
+        gap: 10px;
+        width: 100%;
+        height: 39px;
+        color: white;
+        backdrop-filter: blur(6px);
+        border-radius: 4px 4px 0px 0px;
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    .status {
+        height: 23px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 23px;
+        color: #141414;
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+    }
+
+    .status-text {
+        color: white;
+    }
+</style>
+
+<div class="module_big" style="border: 3px solid #039855;">
+    <div class="section_header" style="border: 3px solid #039855; background: #039855">
+        <div class="status">
+            <span class="status-text">Print unit</span>
+        </div>
+    </div>
+
+    <div class="toggle-buttons" style="display: flex; align-items: center; width: 100%; padding: 0 10px;">
+        <button class="round-buttons" @onclick="Close" style="margin-right: auto;">
+            <svg width="18" height="13" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(90deg);">
+                <path d="M1.90039 1.49988L6.90039 6.49988L11.9004 1.49988" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+    </div>
+    <!-- Panel de Cabecera -->
+    <div class="header-panel-container">
+        <div class="tool-tab">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+        </div>
+
+        <div class="tabs-row">
+            <div class="tab-item @(selectedMode == "PrintBar" ? "active" : "")" @onclick='() => SelectMode("PrintBar")'>
+                Print Bar
+            </div>
+            <div class="tab-item @(selectedMode == "CrossBeam" ? "active" : "")" @onclick='() => SelectMode("CrossBeam")'>
+                Crossbeam
+            </div>
+        </div>
+
+        <div class="actions-area">
+            @if (selectedMode == "PrintBar")
+            {
+                <button @onclick='() => ButtonActionPlc(nameof(M4_HMI_TO_PLC_DTO.bOpenAirConditioningDoor))' class="action-btn-styled">Open Bars Door</button>
+                <button class="action-btn-styled" @onclick='() => ButtonActionBarPlc(nameof(M4_HMI_TO_PLC_DTO.bMaintenanceCrossbeamDown), true)'>Bars down</button>
+                <button class="action-btn-styled" @onclick='() => ButtonActionBarPlc(nameof(M4_HMI_TO_PLC_DTO.bMaintenanceCrossbeamDown), false)'>Bars up</button>
+                @*                 <button @onclick="Close" class="action-btn-styled">Home</button>
+                <button class="action-btn-styled">Capping</button>
+                <button class="action-btn-styled">Print</button> *@
+            }
+            else
+            {
+                <button @onclick="Close" class="action-btn-styled">Home</button>
+                <button class="action-btn-styled">PH Replacement</button>
+            }
+        </div>
+    </div>
+
+    <!-- Unidades de Impresión Compactas -->
+    <div class="units-horizontal-list">
+        @foreach (var unit in PrintUnits)
+        {
+            <div class="unit-item" style="opacity: @(unit.IsEnabled ? "1" : "0.4")">
+
+                <!-- Fila de Círculo y Toggle de lado -->
+                <div class="controls-row">
+                    <div class="color-circle" style="background-color: @unit.HexColor">
+                        @unit.ColorCode
+                    </div>
+
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked="@unit.IsEnabled" @onchange="(e) => ToggleUnit(unit, e)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Texto de estado debajo -->
+                <div class="state-text">
+                    @GetBarState(unit.BarIndex)
+                </div>
+
+                <!-- Imagen con margin top de -30px -->
+                <div class="unit-container">
+                    <img src="resources/BarImage.png" alt="Print Unit Bar" class="unit-image" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private List<PrintUnitModel> PrintUnits = new()
+    {
+        new PrintUnitModel { ColorCode = "K", HexColor = "#000000", IsEnabled = true, State = "Capping", BarIndex = 0 },
+        new PrintUnitModel { ColorCode = "C", HexColor = "#3ea6ff", IsEnabled = true, State = "Capping", BarIndex = 1 },
+        new PrintUnitModel { ColorCode = "M", HexColor = "#e91e63", IsEnabled = true, State = "Capping", BarIndex = 2 },
+        new PrintUnitModel { ColorCode = "Y", HexColor = "#ffeb3b", IsEnabled = true, State = "Capping", BarIndex = 3 }
+    };
+    public string GetBarState(int barIndex)
+    {
+        if (ReadDTO.M4_PLC_TO_HMI_DTO is null) return "";
+        return ReadDTO.M4_PLC_TO_HMI_DTO.iPbState[barIndex] switch
+        {
+            0 => "Emergency",
+            1 => "Stand by",
+            2 => "Moving",
+            3 => "Print",
+            4 => "Home",
+            5 => "Capping",
+            6 => "Purging",
+            7 => "Wipe",
+            8 => "Manual",
+            9 => "Auto Set",
+            _ => "Unknown"
+        };
+    }
+    public void ButtonActionPlc(string action)
+    {
+        Log.Information("Acción de PLC ejecutada: {Action}", action);
+        // Aquí se implementaría la lógica para enviar comandos al PLC
+        opcUaClient.WriteToPlc(nameof(M4_HMI_TO_PLC_DTO) + "." + action, true);
+    }
+    public void ButtonActionBarPlc(string action, bool down)
+    {
+        Log.Information("Acción de PLC ejecutada: {Action}", action);
+        // Aquí se implementaría la lógica para enviar comandos al PLC
+        foreach (var bar in PrintUnits)
+        {
+            if (bar.IsEnabled && ReadDTO.M4_PLC_TO_HMI_DTO.iPbState[bar.BarIndex] == 3 && ReadDTO.M4_PLC_TO_HMI_DTO.iCbState[bar.BarIndex] == 4)
+            {
+                opcUaClient.WriteToPlc(nameof(M4_HMI_TO_PLC_DTO) + "." + action + "[" + bar.BarIndex + "]", down);
+
+            }
+        }
+    }
+    private string selectedMode = "PrintBar";
+    private double currentHeight = 15.0;
+
+    private async Task Close()
+    {
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+
+    private void SelectMode(string mode)
+    {
+        selectedMode = mode;
+    }
+
+    private void AdjustHeight(double delta)
+    {
+        currentHeight += delta;
+        if (currentHeight < 0) currentHeight = 0;
+        Log.Information("Altura ajustada a {Height} mm", currentHeight);
+    }
+
+    private async Task ToggleUnit(PrintUnitModel unit, ChangeEventArgs e)
+    {
+        unit.IsEnabled = (bool)e.Value;
+        Log.Information("Unidad {Color} cambiada a {State}", unit.ColorCode, unit.IsEnabled);
+    }
+
+    private string GetStatusStyle(string status)
+    {
+        return status switch
+        {
+            "Ready" or "Print" or "Home" or "Stand By" or "Pre Print" => "border: 3px solid #039855; background: #039855",
+            "Not Ready" => "border: 3px solid #DC6803; background: #DC6803",
+            "Emergency" => "border: 3px solid #D30D3A; background: #D30D3A;",
+            _ => "border: 3px solid #6B7280; background: #6B7280"
+        };
+    }
+
+    public class PrintUnitModel
+    {
+        public string ColorCode { get; set; }
+        public int BarIndex { get; set; }
+        public string HexColor { get; set; }
+        public bool IsEnabled { get; set; }
+        public string State { get; set; }
+    }
+}

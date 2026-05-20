@@ -1,0 +1,285 @@
+﻿@using System.Globalization
+@inject ModuleDataService ModuleService
+@inject OpcUaClient opcUaClient
+@inject ReadDTOService ReadDTO
+@inject IJSRuntime JS
+<style>
+    .global {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 20px;
+        width: 92%;
+        height: 90%;
+        background: #FFFFFF;
+        border-radius: 8px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .cross {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+    }
+
+    .title {
+        font-family: 'Inter', sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        color: #141414;
+    }
+
+    .subtitle {
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        color: #A3A3A3;
+    }
+
+    .tabs {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 8px;
+        width: 844px;
+        height: 33px;
+        border-bottom: 1px solid #D6D6D6;
+    }
+
+    .notifications-wrapper {
+        overflow-y: auto;
+        flex-grow: 1; /* Take up remaining vertical space */
+        width: 100%; /* Make it take full available width from parent .global's content box */
+        box-sizing: border-box; /* In case you add padding/border to it later */
+    }
+
+    .notification-details {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Content inside will align to the left */
+        padding: 20px;
+        gap: 16px; /* Adjusted gap, can be tuned */
+        width: 100%; /* Make it take full width of parent .notifications-wrapper */
+        height: auto; /* Allow height to adjust to content, especially with the new button */
+        border: 1px solid #E5E5E5;
+        border-radius: 12px;
+        /* flex: none; order: 0; align-self: stretch; flex-grow: 0; */ /* These are less relevant now or handled by width:100% */
+        margin-bottom: 10px; /* Optional: Adds space between stacked notification items */
+    }
+
+    .alarm-item {
+        /* Notification */
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 6px 12px 6px 6px;
+        gap: 12px;
+        width: auto;
+        height: 45px;
+        /* Error/50 */
+        mix-blend-mode: multiply;
+        border-radius: 59px;
+        /* Inside auto layout */
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+        /* Warning = Yellow */
+        .alarm-item.warning {
+            background: #FEF0C7;
+            color: #B54708;
+        }
+
+        /* Error = Red */
+        .alarm-item.error {
+            background: #FFF0F3;
+            color: #991B1B;
+        }
+
+        .alarm-item p {
+            /* Text md/Medium */
+            margin: 0;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 25px;
+            /* identical to box height, or 125% */
+            /* Warning/700 */
+            /* Inside auto layout */
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+    .alarm-type {
+        /* Badge */
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        padding: 4px 12px 4px 8px;
+        gap: 4px;
+        height: 33px;
+        /* Warning/600 */
+        background: #DC7803;
+        mix-blend-mode: normal;
+        border-radius: 25px;
+        color: #FFFFFF;
+        /* Inside auto layout */
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+        /* Warning = Yellow */
+        .alarm-type.warning {
+            background: #DC7803;
+        }
+
+        /* Error = Red */
+        .alarm-type.error {
+            background: #D30D3A;
+        }
+
+        .alarm-type p {
+            /* Text md/Medium */
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            margin: 0;
+            line-height: 25px;
+            /* identical to box height, or 125% */
+            text-align: center;
+            /* Base/White */
+            color: #FFFFFF;
+            /* Inside auto layout */
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+
+    .date-type {
+        /* Message */
+        height: 23px;
+        /* Text sm/Regular */
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 23px;
+        padding: 0px 10px;
+        color: #525252;
+        /* Inside auto layout */
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+
+    .acknowledge-all-button {
+        padding: 10px 20px;
+        background-color: white; /* Green, for a positive action */
+        color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif; /* Assuming you use Inter */
+        font-size: 16px;
+        border: 2px solid #000000;
+        margin-top: 20px; /* Space above the button, separating it from the list */
+        align-self: center; /* Centers the button horizontally within the .global container */
+        /* Other options for align-self:
+           align-self: flex-end; // Aligns to the right
+           align-self: stretch; // Makes it full width (you'd also remove fixed padding from L/R if you want text centered)
+        */
+    }
+
+        .acknowledge-all-button:active {
+            background-color: whitesmoke; /* Darker green on hover */
+        }
+</style>
+<div>
+    <div class="global">
+        <div class="cross" @onclick="Close">
+            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.5 1.5L1.5 17.5M1.5 1.5L17.5 17.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <div class="title">Notification Center</div>
+        <div class="subtitle">These notifications are pending to be solved.</div>
+        <div class="notifications-wrapper">
+            @foreach (var alarm in Alarms)
+            {
+                <div class="notification-details">
+                    <div class="date-type">@alarm.Date.ToString("dd MMMM, yyyy - hh:mm tt", CultureInfo.InvariantCulture)</div>
+                    <div class="alarm-item @(alarm.IsWarning ? "warning" : "error")">
+                        <div class="alarm-type @(alarm.IsWarning ? "warning" : "error")"><img src="@(alarm.IsWarning ? "resources/alert-triangle-white.png" : "resources/bell-white.png")" height="20" /> <p>@alarm.AlarmType </p></div> <p>@alarm.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="acknowledge-all-button" @onclick="AcknowledgeAllAlarms">Acknowledge All</button>
+
+
+    </div>
+
+    <script src="script.js"></script>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnCloseAlarms { get; set; }
+    [Parameter]
+    public List<Alarm> Alarms { get; set; } = new();
+
+    private async void AcknowledgeAllAlarms()
+    {
+        opcUaClient.WriteToPlc(nameof(M0_HMI_TO_PLC_DTO) + "." + nameof(M0_HMI_TO_PLC_DTO.bResetAlarms), true);
+        await Task.Delay(1000); // Wait for the PLC to process the reset
+        opcUaClient.WriteToPlc(nameof(M0_HMI_TO_PLC_DTO) + "." + nameof(M0_HMI_TO_PLC_DTO.bResetAlarms), false);
+    }
+    private async Task Close()
+    {
+        await OnCloseAlarms.InvokeAsync();
+    }
+    protected override void OnInitialized()
+    {
+        ReadDTO.AlarmUpdated += OnUpdatingAlarms;
+    }
+
+    private void OnUpdatingAlarms(object? sender, Tuple<Alarm, bool> alarm)
+    {
+        if (alarm.Item2)
+        {
+            var existingAlarm = Alarms.FirstOrDefault(a => a.AlarmName == alarm.Item1.AlarmName);
+            if (existingAlarm is null) Alarms.Add(alarm.Item1);
+
+        }
+        else
+        {
+            var existingAlarm = Alarms.FirstOrDefault(a => a.AlarmName == alarm.Item1.AlarmName);
+            if (existingAlarm != null)
+            {
+                Alarms.Remove(existingAlarm);
+            }
+        }
+        InvokeAsync(StateHasChanged);
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("enableHorizontalScroll", "alarmsList");
+        }
+    }
+}

@@ -1,0 +1,156 @@
+﻿@inject OpcUaClient opcUaClient
+
+<style>
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000; /* Ensure it appears on top of other content */
+    }
+
+    .popup-box {
+        width: 600px;
+        max-width: 95%; /* Ensures responsiveness on smaller screens */
+        height: auto; /* Auto height to fit content */
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem; /* Provides consistent spacing between sections */
+    }
+
+    .popup-box__header {
+        font-size: 1.25rem; /* text-xl */
+        font-weight: 700; /* font-bold */
+        color: #111827; /* gray-900 */
+    }
+
+    .popup-box__section {
+        font-family: Arial, sans-serif;
+    }
+
+    .popup-box__section-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #374151; /* gray-700 */
+    }
+
+    .popup-box__value-display {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        padding: 12px 14px;
+        width: 100%;
+        min-height: 52px;
+        background: #FFFFFF;
+        border: 1px solid #A3A3A3;
+        border-radius: 8px;
+        font-size: 1.125rem;
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+        .popup-box__value-display:hover {
+            background-color: #f9fafb; /* gray-50 */
+            border-color: #6B7280; /* gray-500 */
+        }
+
+    .popup-box__actions {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem; /* Increased horizontal space between buttons */
+        margin-top: 1rem;
+    }
+
+    .popup-box__button {
+        min-width: 120px;
+        height: 44px;
+        padding: 0 1.5rem;
+        background-color: #1f2937; /* gray-800 */
+        color: white;
+        border: none;
+        border-radius: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .popup-box__button:hover {
+            background-color: #374151; /* gray-700 */
+        }
+</style>
+
+@if (IsVisible)
+{
+    <div class="popup-overlay">
+        <div class="popup-box">
+            <h3 class="popup-box__header">@Title</h3>
+            <div class="popup-box__actions">
+                <button class="popup-box__button" @onclick="HandleCancel">@CancelButtonText</button>
+                <button class="popup-box__button" @onclick="HandleConfirm">@ConfirmButtonText</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string Title { get; set; } = "Confirmation";
+    [Parameter] public string ConfirmButtonText { get; set; } = "Confirm";
+    [Parameter] public string CancelButtonText { get; set; } = "Cancel";
+    [Parameter] public EventCallback OnConfirm { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private string? plcVariableName;
+
+    public bool IsVisible { get; private set; } = false;
+
+    /// <summary>
+    /// Displays the popup with specific texts and PLC action details.
+    /// </summary>
+    /// <param name="title">The text to display in the header.</param>
+    /// <param name="confirmText">The text for the confirmation button.</param>
+    /// <param name="targetPlcVariable">The full name of the PLC variable to write to.</param>
+    public void Show(string title, string confirmText, string targetPlcVariable)
+    {
+        Title = title;
+        ConfirmButtonText = confirmText;
+        plcVariableName = targetPlcVariable;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Hides the popup and executes the PLC write operation.
+    /// </summary>
+    private async Task HandleConfirm()
+    {
+        if (!string.IsNullOrEmpty(plcVariableName))
+        {
+            opcUaClient.WriteToPlc(plcVariableName, true);
+        }
+
+        IsVisible = false;
+        await OnConfirm.InvokeAsync();
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Closes the popup without taking action.
+    /// </summary>
+    private async Task HandleCancel()
+    {
+        IsVisible = false;
+        await OnCancel.InvokeAsync();
+        StateHasChanged();
+    }
+}

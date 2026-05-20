@@ -1,0 +1,277 @@
+﻿@using System.Globalization
+@inject IJSRuntime JSRuntime // 1. Inject the JS Runtime
+
+@code {
+    [Parameter] public float Value { get; set; }
+    [Parameter] public float MaxValue { get; set; }
+    [Parameter] public float MinValue { get; set; }
+    [Parameter] public EventCallback<float> ValueChanged { get; set; }
+    [Parameter] public EventCallback<object> OnSave { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    private string errorMessage; // To hold the error message
+    private bool firstNumber = true;
+    private string currentValue = "";
+
+    protected override void OnInitialized()
+    {
+        currentValue = Value.ToString();
+    }
+
+    private void AddToValue(string digit)
+    {
+        if (Vibration.Default.IsSupported)
+            Vibration.Default.Vibrate(200);
+        if (firstNumber)
+        {
+            currentValue = "";
+            firstNumber = false;
+        }
+        currentValue += digit;
+
+        if (float.TryParse(currentValue, out float result))
+        {
+            ValueChanged.InvokeAsync(result);
+        }
+    }
+    // Clears the error and shows a new one for a couple of seconds.
+    private async void ShowError(string message)
+    {
+        errorMessage = message;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void ToggleNegative()
+    {
+        if (Vibration.Default.IsSupported)
+            Vibration.Default.Vibrate(200);
+        if (currentValue.StartsWith("-"))
+        {
+            currentValue = currentValue.Substring(1);
+        }
+        else
+        {
+            currentValue = firstNumber ? "-" : "-" + currentValue;
+            if (firstNumber) firstNumber = false;
+        }
+
+        if (float.TryParse(currentValue, out float result))
+        {
+            ValueChanged.InvokeAsync(result);
+        }
+    }
+
+    private void ClearValue()
+    {
+        if (Vibration.Default.IsSupported)
+            Vibration.Default.Vibrate(200);
+        currentValue = "";
+        ValueChanged.InvokeAsync(0);
+    }
+
+    private void AddComma()
+    {
+
+        if (Vibration.Default.IsSupported)
+            Vibration.Default.Vibrate(200);
+        if (!currentValue.Contains("."))
+        {
+            currentValue += ".";
+            // if (float.TryParse(currentValue, out float result))
+            // {
+            //     ValueChanged.InvokeAsync(result);
+            // }
+        }
+    }
+
+    private void Backspace()
+    {
+        if (Vibration.Default.IsSupported)
+            Vibration.Default.Vibrate(200);
+        if (currentValue.Length > 0)
+        {
+            currentValue = currentValue.Substring(0, currentValue.Length - 1);
+            if (float.TryParse(currentValue, out float result))
+            {
+                ValueChanged.InvokeAsync(result);
+            }
+            else
+            {
+                ValueChanged.InvokeAsync(0);
+            }
+        }
+    }
+    IFormatProvider formatProvider = new CultureInfo("en-US");
+    private void Save()
+    {
+        // Clear any previous error messages before trying to save again.
+        errorMessage = null;
+        if (Vibration.Default.IsSupported)
+            Vibration.Default.Vibrate(200);
+        if (float.TryParse(currentValue, NumberStyles.Any, formatProvider, out float result))
+        {
+            if (MinValue.Equals(0) && MaxValue.Equals(0))
+            {
+                OnSave.InvokeAsync(result);
+                return;
+            }
+            // The MinValue and MaxValue are checked ONLY when saving.
+            if (result >= MinValue && result <= MaxValue)
+            {
+                OnSave.InvokeAsync(result);
+            }
+            else
+            {
+                // If the check fails, show the error message.
+                ShowError($"Value must be between {MinValue} and {MaxValue}.");
+                firstNumber = true;
+            }
+        }
+        else
+        {
+            // Handle cases where the current value isn't a valid number (e.g., just "-").
+            ShowError("Invalid number format.");
+            firstNumber = true;
+        }
+    }
+
+
+    private void Cancel()
+    {
+        OnCancel.InvokeAsync();
+    }
+}
+
+<div class="input-modal" @onclick:stopPropagation="true">
+    <div class="keypad-display">@currentValue</div>
+
+    <div class="info-display">
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <span class="error-message">@errorMessage</span>
+        }
+        else
+        {
+            <span class="range-info">
+                Range: @MinValue to @MaxValue
+            </span>
+        }
+    </div>
+
+    <div class="keyboard-display">
+        <div class="numeric-keypad">
+            <button @onclick="() => AddToValue(7.ToString())">7</button>
+            <button @onclick="() => AddToValue(8.ToString())">8</button>
+            <button @onclick="() => AddToValue(9.ToString())">9</button>
+            <button style="background: #A3A3A3" @onclick="Backspace">⌫</button>
+
+            <button @onclick="() => AddToValue(4.ToString())">4</button>
+            <button @onclick="() => AddToValue(5.ToString())">5</button>
+            <button @onclick="() => AddToValue(6.ToString())">6</button>
+            <button class="negative-btn" @onclick="ToggleNegative">-</button>
+
+            <button @onclick="() => AddToValue(1.ToString())">1</button>
+            <button @onclick="() => AddToValue(2.ToString())">2</button>
+            <button @onclick="() => AddToValue(3.ToString())">3</button>
+            <button style="background: #A3A3A3; height: 156px" class="return-btn" @onclick="Save">↵</button>
+
+            <button class="zero-btn" @onclick="() => AddToValue(0.ToString())">0</button>
+            <button @onclick="AddComma">.</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Updated and new styles for the info/error area */
+    .info-display {
+        height: 25px;
+        padding: 0 10px 5px 10px;
+        background-color: white;
+    }
+
+    .error-message {
+        color: #D32F2F; /* Red for errors */
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .range-info {
+        color: #757575; /* Grey for info text */
+        font-size: 14px;
+    }
+
+    /* All other existing styles remain the same */
+    .keyboard-display {
+        margin: 0px;
+        background: #e5e5e5;
+        border-top: 1px solid #737373;
+        border-radius: 0px 0px 8px 8px;
+    }
+
+    .numeric-keypad {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, auto);
+        gap: 6px;
+        padding: 10px;
+        background-color: #e5e5e5;
+        border-radius: 8px;
+        max-width: 788px;
+        text-align: center;
+    }
+
+    .keypad-display {
+        grid-column: span 4;
+        padding: 10px;
+        height: 75px;
+        font-size: 32px;
+        background-color: white;
+        border: 0px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .numeric-keypad button {
+        font-size: 28px;
+        height: 75px;
+        background-color: white;
+        color: black;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border: none;
+    }
+
+        .numeric-keypad button:hover {
+            background-color: lightgray;
+        }
+
+        .numeric-keypad button:active {
+            background-color: darkgray;
+        }
+
+    .zero-btn {
+        grid-column: span 2;
+    }
+
+    .return-btn {
+        grid-row: span 2;
+        color: white;
+        height: 156px;
+    }
+
+    .input-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 0px;
+        border: 1px solid #737373;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 788px;
+        text-align: center;
+    }
+</style>

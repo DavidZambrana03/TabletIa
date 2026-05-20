@@ -1,0 +1,2189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="bAirLeakAlarm" xml:space="preserve">
+    <value>Machine air leak, higher than 100 L/min</value>
+  </data>
+  <data name="bAniloxDriveAlarm" xml:space="preserve">
+    <value>Anilox drive alarm, reset machine to continue</value>
+  </data>
+  <data name="bAniloxDriveWarning" xml:space="preserve">
+    <value>Anilox drive warning</value>
+  </data>
+  <data name="bBackDoor" xml:space="preserve">
+    <value>Back door opened</value>
+  </data>
+  <data name="bCentralDrumMotorDriveAlarm" xml:space="preserve">
+    <value>Central drum motor drive alarm</value>
+  </data>
+  <data name="bCentralDrumMotorDriveWarning" xml:space="preserve">
+    <value>Central drum motor drive warning</value>
+  </data>
+  <data name="bCentralFrontalDoorOpen" xml:space="preserve">
+    <value>Close central door to continue</value>
+  </data>
+  <data name="bChillRollDriveAlarm" xml:space="preserve">
+    <value>Chill roll drive alarm, reset machine to continue</value>
+  </data>
+  <data name="bChillRollDriveWarning" xml:space="preserve">
+    <value>Chill roll drive warning</value>
+  </data>
+  <data name="bChillRollFanProtected" xml:space="preserve">
+    <value>Chill roll fan protected enabled</value>
+  </data>
+  <data name="bChillRollFanProtection" xml:space="preserve">
+    <value>Chill roll fan protection warning</value>
+  </data>
+  <data name="bCoatingDoorOpen" xml:space="preserve">
+    <value>Coating door opened</value>
+  </data>
+  <data name="bComments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="bCopies" xml:space="preserve">
+    <value>Copies</value>
+  </data>
+  <data name="bCornerFrontalDoorOpen" xml:space="preserve">
+    <value>Corner frontal door opened</value>
+  </data>
+  <data name="bCrossBeamMotorDriveAlarm" xml:space="preserve">
+    <value>Motor drive alarm cross beam</value>
+  </data>
+  <data name="bCrossBeamMotorDriveWarning" xml:space="preserve">
+    <value>Motor drive warning cross beam</value>
+  </data>
+  <data name="bDrumFanProtection" xml:space="preserve">
+    <value>Drum fan protecion warning</value>
+  </data>
+  <data name="bDrumTcGeneralAlarm" xml:space="preserve">
+    <value>Drum temperature controller general alarm</value>
+  </data>
+  <data name="bDrumTcMaxTempAlarm" xml:space="preserve">
+    <value>Drum temperature controller max temperature alarm</value>
+  </data>
+  <data name="bDrumTcNotInOperation" xml:space="preserve">
+    <value>Drum not in operation</value>
+  </data>
+  <data name="bDryerDoorOpen" xml:space="preserve">
+    <value>Dryer door is opened</value>
+  </data>
+  <data name="bDryingSystemPIDErrror" xml:space="preserve">
+    <value>Error on drying system PID</value>
+  </data>
+  <data name="bEPBPrimer" xml:space="preserve">
+    <value>Primer emergency push button pressed</value>
+  </data>
+  <data name="bEPBPrimerInside" xml:space="preserve">
+    <value>Release inside primer emergency button</value>
+  </data>
+  <data name="bEPBPrintingUnit" xml:space="preserve">
+    <value>Emergency push button pressed</value>
+  </data>
+  <data name="bEPBRewinder" xml:space="preserve">
+    <value>Emergency push button pressed</value>
+  </data>
+  <data name="bEPBUnwinder" xml:space="preserve">
+    <value>Release unwinder push button</value>
+  </data>
+  <data name="bEPBWhiteUnit" xml:space="preserve">
+    <value>Emergency push button pressed</value>
+  </data>
+  <data name="bExhaustBlowerDriveAlarm" xml:space="preserve">
+    <value>Exhaust blower drive error</value>
+  </data>
+  <data name="bExhaustFan1DriveAlarm" xml:space="preserve">
+    <value>Exhaust fan 1 drive alarm</value>
+  </data>
+  <data name="bExhaustFan2DriveAlarm" xml:space="preserve">
+    <value>Exhaust fan 2 drive alarm</value>
+  </data>
+  <data name="bGasBurnerAlarm" xml:space="preserve">
+    <value>Gas burner alarm</value>
+  </data>
+  <data name="bGasBurnerFailOnStart" xml:space="preserve">
+    <value>Gas burner failed on start</value>
+  </data>
+  <data name="bGasBurnerSafetyPressureAlarm" xml:space="preserve">
+    <value>Gas burner safety pressure alarm</value>
+  </data>
+  <data name="bGasBurnerTempDiscrepancy" xml:space="preserve">
+    <value>Gas burner temperature discrepancy</value>
+  </data>
+  <data name="bHeatingGroupRealyAlarm" xml:space="preserve">
+    <value>Heating group error</value>
+  </data>
+  <data name="bHmiDoorOpen" xml:space="preserve">
+    <value>Close screen door to continue</value>
+  </data>
+  <data name="bImpExhPowerSupplyFanProtect1" xml:space="preserve">
+    <value>Power supply fan 1 protection warning</value>
+  </data>
+  <data name="bImpExhPowerSupplyFanProtect2" xml:space="preserve">
+    <value>Power supply fan 2 protection warning</value>
+  </data>
+  <data name="bImpulsionBlowerDriveAlarm" xml:space="preserve">
+    <value>Impulsion blower drive error</value>
+  </data>
+  <data name="bImpulsionFan1DriveAlarm" xml:space="preserve">
+    <value>Impulsion fan 1 drive alarm</value>
+  </data>
+  <data name="bImpulsionFan2DriveAlarm" xml:space="preserve">
+    <value>Impulsion fan 2 drive alarm</value>
+  </data>
+  <data name="bInfeedFanProtection" xml:space="preserve">
+    <value>Infeed fan protecion warning</value>
+  </data>
+  <data name="bInfeedMotorDriveAlarm" xml:space="preserve">
+    <value>Infeed motor drive alarm</value>
+  </data>
+  <data name="bInfeedMotorDriveWarning" xml:space="preserve">
+    <value>Infeed motor drive warning</value>
+  </data>
+  <data name="bLateralDoor1Open" xml:space="preserve">
+    <value>Close lateral door 1 to continue</value>
+  </data>
+  <data name="bLateralDoor2Open" xml:space="preserve">
+    <value>Close lateral door 2 to continue</value>
+  </data>
+  <data name="bLateralDoorOpen" xml:space="preserve">
+    <value>Lateral door opened</value>
+  </data>
+  <data name="bLateralDoorOpenDown" xml:space="preserve">
+    <value>Close the side lower door</value>
+  </data>
+  <data name="bLateralDoorOpenUp" xml:space="preserve">
+    <value>Close the side upper door</value>
+  </data>
+  <data name="bLeftFrontalDoorOpen" xml:space="preserve">
+    <value>Close left frontal door to continue</value>
+  </data>
+  <data name="bM4ChillRollMotorDriveAlarm" xml:space="preserve">
+    <value>Chill roll  motor drive alarm</value>
+  </data>
+  <data name="bM4ChillRollMotorDriveWarning" xml:space="preserve">
+    <value>Chill roll motor drive warning</value>
+  </data>
+  <data name="bM4PrintingUnitWebBrake" xml:space="preserve">
+    <value>Web break</value>
+  </data>
+  <data name="bM5ChillRollMotorDriveAlarm" xml:space="preserve">
+    <value>Chill roll motor drive alarm</value>
+  </data>
+  <data name="bM5ChillRollMotorDriveWarning" xml:space="preserve">
+    <value>Chill roll drive warning</value>
+  </data>
+  <data name="bMaterialType" xml:space="preserve">
+    <value>Material type</value>
+  </data>
+  <data name="bMaxTemperatureExceeded" xml:space="preserve">
+    <value>Maximum temperature exceeded</value>
+  </data>
+  <data name="bMaxTempExceeded" xml:space="preserve">
+    <value>Maximum temperature exceeded</value>
+  </data>
+  <data name="bMeters" xml:space="preserve">
+    <value>Meters</value>
+  </data>
+  <data name="bModuleNotRdyToStart" xml:space="preserve">
+    <value>Not ready to start</value>
+  </data>
+  <data name="bModuleNotReadyToStart" xml:space="preserve">
+    <value>Module 4 not ready to start</value>
+  </data>
+  <data name="bNipRollDriveAlarm" xml:space="preserve">
+    <value>Nip roll drive error</value>
+  </data>
+  <data name="bNipRollMotorDriveWarning" xml:space="preserve">
+    <value>Nip roll motor drive warning</value>
+  </data>
+  <data name="bOutFeedFanProtection" xml:space="preserve">
+    <value>Out feed fan protection warning</value>
+  </data>
+  <data name="bOutfeedMotorDriveAlarm" xml:space="preserve">
+    <value>Outfeed motor drive alarm</value>
+  </data>
+  <data name="bOutfeedMotorDriveWarning" xml:space="preserve">
+    <value>Outfeed motor drive warning</value>
+  </data>
+  <data name="bOvenGateDoorsAlarm" xml:space="preserve">
+    <value>Oven gate doors alarm</value>
+  </data>
+  <data name="bOvenGatesOpen" xml:space="preserve">
+    <value>Close oven gates to continue</value>
+  </data>
+  <data name="bPbPowerProtection" xml:space="preserve">
+    <value>Power protection</value>
+  </data>
+  <data name="bPinningMaxTempAlarm" xml:space="preserve">
+    <value>Pinning max temperature alarm</value>
+  </data>
+  <data name="bPinningPressureSwitchsAlarm" xml:space="preserve">
+    <value>Pinning pressure alarm</value>
+    <comment>Pinning pressure switchs alarm</comment>
+  </data>
+  <data name="bPinningPressureSwitchsAlarm " xml:space="preserve">
+    <value>Pinning pressure alarm</value>
+    <comment>Pinning pressure switchs alarm</comment>
+  </data>
+  <data name="bPinningSolidStateRelayAlarm " xml:space="preserve">
+    <value>Pinning solid state alarm</value>
+  </data>
+  <data name="bPressureSwitchError" xml:space="preserve">
+    <value>Pressure switch error</value>
+  </data>
+  <data name="bPrimerSystemStopped" xml:space="preserve">
+    <value>Primer system is stopped</value>
+  </data>
+  <data name="bPrimerTankEmpty" xml:space="preserve">
+    <value>Primer tank is empty</value>
+  </data>
+  <data name="bPrimerTankLowLevel" xml:space="preserve">
+    <value>Primer tank low level</value>
+  </data>
+  <data name="bPrimerTrayFull" xml:space="preserve">
+    <value>Primer tray is full</value>
+  </data>
+  <data name="bPrimerWebBreak" xml:space="preserve">
+    <value>Primer web break, reset machine to continue</value>
+  </data>
+  <data name="bPrintBarMotorDriveAlarm" xml:space="preserve">
+    <value>Motor drive alarm print bar</value>
+  </data>
+  <data name="bPrintBarMotorDriveWarning" xml:space="preserve">
+    <value>Motor drive warning alarm print bar</value>
+  </data>
+  <data name="bPrintBarRegisterError" xml:space="preserve">
+    <value>Register error print bar</value>
+  </data>
+  <data name="bPuPanLevelWarning" xml:space="preserve">
+    <value>Pu pan level warning</value>
+  </data>
+  <data name="bRewAntiStaticBarsAlarm" xml:space="preserve">
+    <value>Error with the antistatic bars</value>
+  </data>
+  <data name="bRewArmsOpen" xml:space="preserve">
+    <value>Rewinder arms open</value>
+  </data>
+  <data name="bRewAutomaticStop" xml:space="preserve">
+    <value>Rewinder is automatic stopped</value>
+  </data>
+  <data name="bRewDriveAlarm" xml:space="preserve">
+    <value>Rewinder drive error</value>
+  </data>
+  <data name="bRewMotorDriveWarning" xml:space="preserve">
+    <value>Rewinder motor drive warning</value>
+  </data>
+  <data name="bRewMotorStopped" xml:space="preserve">
+    <value>Rewinder motor is stopped</value>
+  </data>
+  <data name="bRewNipNotClosed" xml:space="preserve">
+    <value>Please close rewinder NIP</value>
+  </data>
+  <data name="bRewShaftlessDriveAlarm" xml:space="preserve">
+    <value>Rewinder shaftless drive error</value>
+  </data>
+  <data name="bRewWebBreak" xml:space="preserve">
+    <value>Rewinder web break</value>
+  </data>
+  <data name="bRightFrontalDoorOpen" xml:space="preserve">
+    <value>Close right frontal door to continue</value>
+  </data>
+  <data name="bSearchARecipe" xml:space="preserve">
+    <value>Search a recipe</value>
+  </data>
+  <data name="bSelfCleanHartingDisconnected" xml:space="preserve">
+    <value>Self cleaning harting is disconnected</value>
+  </data>
+  <data name="bSleeveChangeActive" xml:space="preserve">
+    <value>Sleeve change is active</value>
+  </data>
+  <data name="bSolidStateRealyError" xml:space="preserve">
+    <value>Error with the solid state relay</value>
+  </data>
+  <data name="bSolidStateRelayFansPowerSupply" xml:space="preserve">
+    <value>Error with the power supply of the solid state relay of the fans</value>
+  </data>
+  <data name="bSpeedMatchMotorDriveAlarm" xml:space="preserve">
+    <value>Speed match motor drive alarm</value>
+  </data>
+  <data name="bSpeedMatchMotorDriveWarning" xml:space="preserve">
+    <value>Speed match motor drive warning</value>
+  </data>
+  <data name="bSpliceDetectorNotOk" xml:space="preserve">
+    <value>Put splice detector on the material, and teach</value>
+  </data>
+  <data name="bSpliceInProgress" xml:space="preserve">
+    <value>Splice is in progress</value>
+  </data>
+  <data name="bSpliceTableClosed" xml:space="preserve">
+    <value>Open splice table in order to start Unwinder motor</value>
+  </data>
+  <data name="bThickness" xml:space="preserve">
+    <value>Thickness</value>
+  </data>
+  <data name="bTreaterDisabled" xml:space="preserve">
+    <value>Enable corona treater</value>
+  </data>
+  <data name="bUnwAntiStaticsAlarm" xml:space="preserve">
+    <value>Enable anti statics</value>
+  </data>
+  <data name="bUnwArmsOpen" xml:space="preserve">
+    <value>Close unwinder arms</value>
+  </data>
+  <data name="bUnwAutomaticStop" xml:space="preserve">
+    <value>Reset alarms to continue</value>
+  </data>
+  <data name="bUnwDriveAlarm" xml:space="preserve">
+    <value>Unwinder drive error, reset machine to continue</value>
+  </data>
+  <data name="bUnwDriveWarning" xml:space="preserve">
+    <value>Reset alarms to continue</value>
+  </data>
+  <data name="bUnwMotorStopped" xml:space="preserve">
+    <value>Start unwinder motor</value>
+  </data>
+  <data name="bUnwShaftDriveAlarm" xml:space="preserve">
+    <value>Unwinder shaft drive error, reset machine to continue</value>
+  </data>
+  <data name="bUnwTensionAlarm" xml:space="preserve">
+    <value>Unwinder tension error, reset machine to continue</value>
+  </data>
+  <data name="bUnwWebBreak" xml:space="preserve">
+    <value>Unwinder web break, reset machine to continue</value>
+  </data>
+  <data name="bWasteTankFull" xml:space="preserve">
+    <value>Waste tank is full</value>
+  </data>
+  <data name="bWaterTankLowLevel" xml:space="preserve">
+    <value>Water tank has low level</value>
+  </data>
+  <data name="bWebGuideLossOfNull" xml:space="preserve">
+    <value>Web guide loss of null</value>
+  </data>
+  <data name="bWidth" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="key0CopiesReviseIt" xml:space="preserve">
+    <value> has 0 copies, please revise it.</value>
+  </data>
+  <data name="keyAcknowledgeAll" xml:space="preserve">
+    <value>Acknowledge all</value>
+  </data>
+  <data name="keyAddAll" xml:space="preserve">
+    <value>Add all</value>
+  </data>
+  <data name="keyAddJobs" xml:space="preserve">
+    <value>Add jobs to the Queue</value>
+  </data>
+  <data name="keyAddQueue" xml:space="preserve">
+    <value>Add to queue</value>
+  </data>
+  <data name="keyAdviseCalibrationPH" xml:space="preserve">
+    <value>This action will automatically do the following processes to prepare the Print Calibration phase:</value>
+  </data>
+  <data name="keyAirRefill" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyAlarmHistory" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyAlarms" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyAlarmsCount" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyAlertAndNotification" xml:space="preserve">
+    <value>Alerts &amp; Notifications</value>
+  </data>
+  <data name="keyAllPhReadyToPrint" xml:space="preserve">
+    <value>All Print heads powered and available to print</value>
+  </data>
+  <data name="keyAlreadyScannedKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyAnalyzedColorUniformity" xml:space="preserve">
+    <value>Analyzed Color uniformity</value>
+  </data>
+  <data name="keyAnalyzedNozzleTest" xml:space="preserve">
+    <value>Analyzed nozzle test</value>
+  </data>
+  <data name="keyAnd" xml:space="preserve">
+    <value> and </value>
+  </data>
+  <data name="keyAreYouSureToStopPrimer" xml:space="preserve">
+    <value>Be Careful primer system is started and the doctor blade chamber is full of product, if you stop the system all the product will be poured out messing all the application zone. Are you sure you want to stop primer system?</value>
+  </data>
+  <data name="keyAutoSetPosition" xml:space="preserve">
+    <value>Auto set position</value>
+  </data>
+  <data name="keyAutoSetPositions" xml:space="preserve">
+    <value>Auto set positons</value>
+  </data>
+  <data name="keyBar" xml:space="preserve">
+    <value>bar</value>
+  </data>
+  <data name="keybChillRollNipOpen" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybChillRollWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyBeforeCleanPh" xml:space="preserve">
+    <value>Before starting cleaning the printheads, please start primer.
+                       Click to “Start Primer” button to start.</value>
+  </data>
+  <data name="keyBeforeShuttingDailyMaintenance" xml:space="preserve">
+    <value>Before shutting down system you need to perform the daily maintenance process.</value>
+  </data>
+  <data name="keyBlack" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="keybMachineMotorDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybMachineMotorNipOpen" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybPhotocellDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybPhPositionerDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybPhPositionerMotorAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybPrintingUnitCalenderDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybRewAutomaticStop" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybRewinderArmsOpen" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybRewinderDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybRewinderMotorStopped" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybRewinderWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybSpliceDetectorNotOk" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybTreaterDisabled" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybUnwinderArmsOpen" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybUnwinderDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybUnwinderMotorStopped" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybUnwinderWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyButtonPressed" xml:space="preserve">
+    <value>Button pressed</value>
+  </data>
+  <data name="keybUvPositionerDriveWarning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keybWebGuideLossOfNull" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyCalenderMotorAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyCalibrated" xml:space="preserve">
+    <value>Calibrated</value>
+  </data>
+  <data name="keyCalibratePrintheads" xml:space="preserve">
+    <value>Calibrate Printheads</value>
+  </data>
+  <data name="keyCalibrationComplete" xml:space="preserve">
+    <value>Calibration Complete</value>
+  </data>
+  <data name="keyCalibrationReport" xml:space="preserve">
+    <value>Calibration Report</value>
+  </data>
+  <data name="keyCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="keyCancelCalibrationProcessPopup" xml:space="preserve">
+    <value>Cancel Calibration Process?</value>
+  </data>
+  <data name="keyCancelDeleteRecipe" xml:space="preserve">
+    <value>No, don't delete it</value>
+  </data>
+  <data name="keyCancelDownload" xml:space="preserve">
+    <value>Cancel download</value>
+  </data>
+  <data name="keyCancelPrint" xml:space="preserve">
+    <value>Cancel Print</value>
+  </data>
+  <data name="keyCancelProcess" xml:space="preserve">
+    <value>Cancel process</value>
+  </data>
+  <data name="keyCancelShutDownProcess" xml:space="preserve">
+    <value>Cancel Shutdown Process?</value>
+  </data>
+  <data name="keyCapping" xml:space="preserve">
+    <value>Capping</value>
+  </data>
+  <data name="keyCappingCover" xml:space="preserve">
+    <value>Capping Cover</value>
+  </data>
+  <data name="keyCappingInspection" xml:space="preserve">
+    <value>Capping inspection</value>
+  </data>
+  <data name="keyCappingInspectionText" xml:space="preserve">
+    <value>Please be sure you did the check previous checking and keep going to the next step.</value>
+  </data>
+  <data name="keyCappingWipe" xml:space="preserve">
+    <value>Capping and wipes visual inspection</value>
+  </data>
+  <data name="keyChangeRecipeTo" xml:space="preserve">
+    <value>Changed recipe to:</value>
+  </data>
+  <data name="keyChangeReel" xml:space="preserve">
+    <value>CHANGE REEL</value>
+  </data>
+  <data name="keyChangeSleeve" xml:space="preserve">
+    <value>Change sleeve</value>
+  </data>
+  <data name="keyCheckCappingFlushLevel" xml:space="preserve">
+    <value>Check capping flush level</value>
+  </data>
+  <data name="keyCheckingAndMovingPrintBars" xml:space="preserve">
+    <value>Checking &amp; moving print bars to capping position</value>
+  </data>
+  <data name="keyCheckingPreparing" xml:space="preserve">
+    <value>Checking &amp; Preparing...</value>
+  </data>
+  <data name="keyCheckingPrimer" xml:space="preserve">
+    <value>Checking Primer</value>
+  </data>
+  <data name="keyCheckingSafetySystem" xml:space="preserve">
+    <value>Checking saftey system</value>
+  </data>
+  <data name="keyCheckVisualInspection" xml:space="preserve">
+    <value>Check Visual Inspection</value>
+  </data>
+  <data name="keyChillerAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyChillerProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyChillRollDriveWarning" xml:space="preserve">
+    <value>Chill roll drive warning</value>
+  </data>
+  <data name="keyChillRollFanProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyChillRollpressure" xml:space="preserve">
+    <value>Chill roll pressure</value>
+  </data>
+  <data name="keyChillRollPressureRecipe" xml:space="preserve">
+    <value>Chill roll pressure (bar)</value>
+  </data>
+  <data name="keyChillRollPressurevs" xml:space="preserve">
+    <value>Chill Roll Pressure</value>
+  </data>
+  <data name="keyChillRollTCProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyChillRollTension" xml:space="preserve">
+    <value>Chill roll tension</value>
+  </data>
+  <data name="keyChillRollWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyClean" xml:space="preserve">
+    <value>Clean</value>
+  </data>
+  <data name="keyCleaning" xml:space="preserve">
+    <value>Cleaning</value>
+  </data>
+  <data name="keyCleaningPrimer" xml:space="preserve">
+    <value>Cleaning Primer</value>
+  </data>
+  <data name="keyCleaningWater" xml:space="preserve">
+    <value>CLEAN WATER</value>
+  </data>
+  <data name="keyCleanPrimer" xml:space="preserve">
+    <value>Clean primer</value>
+  </data>
+  <data name="keyCleanRecirculation" xml:space="preserve">
+    <value>CLEAN RECIRCULATION</value>
+  </data>
+  <data name="keyClickOnaJob" xml:space="preserve">
+    <value>Click on a job to preview it</value>
+  </data>
+  <data name="keyClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="keyCloseDoor" xml:space="preserve">
+    <value>Close door</value>
+  </data>
+  <data name="keyClosingDoctorBladeChamber" xml:space="preserve">
+    <value>Closing doctor blade chamber</value>
+  </data>
+  <data name="keyCoatingTension" xml:space="preserve">
+    <value>Coating tension</value>
+  </data>
+  <data name="keyCoatingUnit" xml:space="preserve">
+    <value>Coating unit</value>
+  </data>
+  <data name="keyCodes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyColorUniformityCompensation" xml:space="preserve">
+    <value>Color uniformity compensation</value>
+  </data>
+  <data name="keyColourUniformity" xml:space="preserve">
+    <value>Colour uniformity</value>
+  </data>
+  <data name="keyComexiUpperCase" xml:space="preserve">
+    <value>COMEXI</value>
+  </data>
+  <data name="keyComments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="keyCompensatingNozzles" xml:space="preserve">
+    <value>Compensating Nozzles</value>
+  </data>
+  <data name="keyConfirmationCancelCalibrationProcess" xml:space="preserve">
+    <value>Are you sure you want to cancel the ongoing calibration process? Cancelling now will leave the process incomplete, requiring a restart from the beginning.</value>
+  </data>
+  <data name="keyConfirmDeleteRecipe" xml:space="preserve">
+    <value>Yes, delete it</value>
+  </data>
+  <data name="keyConfirmSave" xml:space="preserve">
+    <value>✓  Confirm and download</value>
+  </data>
+  <data name="KeyConifgPath" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyConnectingState" xml:space="preserve">
+    <value>Connecting</value>
+  </data>
+  <data name="keyContactComexi" xml:space="preserve">
+    <value>Contact Comexi</value>
+  </data>
+  <data name="keyContinue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="keyContinueProcess" xml:space="preserve">
+    <value>Continue process</value>
+  </data>
+  <data name="keyCoolingDown" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyCoolingSupply400vMainContactor" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyCopies" xml:space="preserve">
+    <value>Copies</value>
+  </data>
+  <data name="keyCoreSize" xml:space="preserve">
+    <value>Core size</value>
+  </data>
+  <data name="keyCoreSizeRecipe" xml:space="preserve">
+    <value>Core Size (Inches)</value>
+  </data>
+  <data name="keyCoronaTreatment" xml:space="preserve">
+    <value>Corona treatment</value>
+  </data>
+  <data name="keyCreateNewRecipe" xml:space="preserve">
+    <value>➕  Create new recipe</value>
+  </data>
+  <data name="keyCreateNewUser" xml:space="preserve">
+    <value>Create New User</value>
+  </data>
+  <data name="keyCreateNewUserAccount" xml:space="preserve">
+    <value>Create a new user account</value>
+  </data>
+  <data name="keyCreateUser" xml:space="preserve">
+    <value>Create user</value>
+  </data>
+  <data name="keyCrossbeam" xml:space="preserve">
+    <value>Crossbeam</value>
+  </data>
+  <data name="keyCurrentCorona" xml:space="preserve">
+    <value>Current corona</value>
+  </data>
+  <data name="keyCurrentDiameter" xml:space="preserve">
+    <value>Current diameter</value>
+  </data>
+  <data name="keyCurrentJobTime" xml:space="preserve">
+    <value>Current job remaining time</value>
+  </data>
+  <data name="keyCurrentReelMeters" xml:space="preserve">
+    <value>Current reel meters</value>
+  </data>
+  <data name="keyCyan" xml:space="preserve">
+    <value>Cyan</value>
+  </data>
+  <data name="keyDancerTension" xml:space="preserve">
+    <value>Dancer tension</value>
+  </data>
+  <data name="keyDatamatrix" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="keyDefineRecipe" xml:space="preserve">
+    <value>Define Recipe</value>
+  </data>
+  <data name="keyDelete" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyDeleteRecipe" xml:space="preserve">
+    <value>Are you sure you want to delete this recipe?</value>
+  </data>
+  <data name="keyDescriptionGapAndPattern" xml:space="preserve">
+    <value>Specify the meters you want to print between jobs and the pattern to be printed on that space.</value>
+  </data>
+  <data name="keyDiameterOffsetTaper" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyDigital" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyDigitalWhite" xml:space="preserve">
+    <value>Digital White</value>
+  </data>
+  <data name="keyDimensions" xml:space="preserve">
+    <value>Dimensions</value>
+  </data>
+  <data name="keyDirection" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="keyDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="keyDisablingTension" xml:space="preserve">
+    <value>Disabling tension</value>
+  </data>
+  <data name="keyDiscardChanges" xml:space="preserve">
+    <value>Discard Changes</value>
+  </data>
+  <data name="keyDoctorBlade" xml:space="preserve">
+    <value>Doctor blade chamber in prework position</value>
+  </data>
+  <data name="keyDoctorBladePressure" xml:space="preserve">
+    <value>Doctor blade pressure</value>
+  </data>
+  <data name="keyDosePower" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyDoseTreater" xml:space="preserve">
+    <value>Dose (W/cm2)</value>
+  </data>
+  <data name="keyDown" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="keyDownladedNozzleTest" xml:space="preserve">
+    <value>Downloaded nozzle test</value>
+  </data>
+  <data name="keyDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="keyDownloadedColorUniformity" xml:space="preserve">
+    <value>Downloaded Color uniformity</value>
+  </data>
+  <data name="keyDownloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="keyDoYouWantToOverride" xml:space="preserve">
+    <value>Do you want to overwrite the current recipe or to create a new one?</value>
+  </data>
+  <data name="keyDraining" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyDrumTemperature" xml:space="preserve">
+    <value>Drum temperature</value>
+  </data>
+  <data name="keyDrumTemperatureRecipe" xml:space="preserve">
+    <value>Drum temperature (ºC)</value>
+  </data>
+  <data name="keyDrying" xml:space="preserve">
+    <value>Drying</value>
+  </data>
+  <data name="keyDryingTemperature" xml:space="preserve">
+    <value>Drying temperature</value>
+  </data>
+  <data name="keyDryingTemperatureRecipe" xml:space="preserve">
+    <value>Drying temperature (ºC)</value>
+  </data>
+  <data name="keyDueDate" xml:space="preserve">
+    <value>Due date</value>
+  </data>
+  <data name="keyEmergency" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyEmergencyButtonPressed" xml:space="preserve">
+    <value>Emergency Button Pressed</value>
+  </data>
+  <data name="keyEmergencyState" xml:space="preserve">
+    <value>Emergency</value>
+  </data>
+  <data name="keyEmergencyStopState" xml:space="preserve">
+    <value>Emergency stop</value>
+  </data>
+  <data name="keyEmpty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="keyEmptyCubitainerAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyEmptying" xml:space="preserve">
+    <value>EMPTYING</value>
+  </data>
+  <data name="keyEnableChangeSleeve" xml:space="preserve">
+    <value>Enable change sleeve</value>
+  </data>
+  <data name="keyEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="keyEPBPrintingUnit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyEPBRewinder" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyEPBRewinderPrintingUnit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyEPBUnwinder" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyEPBUnwinderPrintingUnit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyError" xml:space="preserve">
+    <value>ERROR</value>
+  </data>
+  <data name="keyExpulsionFan1" xml:space="preserve">
+    <value>Expulsion fan 1</value>
+  </data>
+  <data name="keyExpulsionFan1Recipe" xml:space="preserve">
+    <value>Expulsion fan 1(%)</value>
+  </data>
+  <data name="keyExpulsionFan2" xml:space="preserve">
+    <value>Expulsion fan 2</value>
+  </data>
+  <data name="keyExpulsionFan2Recipe" xml:space="preserve">
+    <value>Expulsion fan 2(%)</value>
+  </data>
+  <data name="keyFailCalibration" xml:space="preserve">
+    <value>Calibration fail</value>
+  </data>
+  <data name="keyFailedPositioning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyFastStopState" xml:space="preserve">
+    <value>Fast stop</value>
+  </data>
+  <data name="keyFillingDoctorBladeChamber" xml:space="preserve">
+    <value>Filling doctor blade chamber</value>
+  </data>
+  <data name="keyFillingUp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyFillingWater" xml:space="preserve">
+    <value>Filling water</value>
+  </data>
+  <data name="keyFlowAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyForgotPassword" xml:space="preserve">
+    <value>I forgot my password</value>
+  </data>
+  <data name="keyFormat" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="keyFrom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyFullName" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="keyGap" xml:space="preserve">
+    <value>Gap</value>
+  </data>
+  <data name="keyGapAndPattern" xml:space="preserve">
+    <value>Gap and pattern between jobs</value>
+  </data>
+  <data name="keyGapandPatternJob" xml:space="preserve">
+    <value>Gap and pattern</value>
+  </data>
+  <data name="keyGapMeters" xml:space="preserve">
+    <value>Meters between jobs</value>
+  </data>
+  <data name="keyGapPattern" xml:space="preserve">
+    <value>Pattern</value>
+  </data>
+  <data name="keyGoChcekCapping" xml:space="preserve">
+    <value>Please go to the X part of the machine and visually check if the elements are correct and there is enough material.</value>
+  </data>
+  <data name="keyGoMainScreen" xml:space="preserve">
+    <value>Please go back to Main Screen to continue with machine startup process</value>
+  </data>
+  <data name="keyGoPrimerUnit" xml:space="preserve">
+    <value>Go to primer unit and start primer</value>
+  </data>
+  <data name="keyGreen" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="keyHeatingInPidError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyHeatingIntPidError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyHeatingOutPidError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyHistoryLog" xml:space="preserve">
+    <value>History log</value>
+  </data>
+  <data name="keyHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="keyHyperbolic" xml:space="preserve">
+    <value>Hyperbolic</value>
+  </data>
+  <data name="keyIfTheRecipeHasBeenUsed" xml:space="preserve">
+    <value>If the actual recipe has been used one time or more you must create a new one.</value>
+  </data>
+  <data name="keyImage" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="keyImpulsionFan1" xml:space="preserve">
+    <value>Impulsion fan 1</value>
+  </data>
+  <data name="keyImpulsionFan1Recipe" xml:space="preserve">
+    <value>Impulsion fan 1(%)</value>
+  </data>
+  <data name="keyImpulsionFan2" xml:space="preserve">
+    <value>Impulsion fan 2</value>
+  </data>
+  <data name="keyImpulsionFan2Recipe" xml:space="preserve">
+    <value>Impulsion fan 2(%)</value>
+  </data>
+  <data name="keyInches" xml:space="preserve">
+    <value>Inches</value>
+  </data>
+  <data name="keyIncorrectUserPass" xml:space="preserve">
+    <value>Incorrect User/Password</value>
+  </data>
+  <data name="keyIndicationsCalibrationPH" xml:space="preserve">
+    <value>Please press the start button 3 times to initiate the calibrating process.During printing, the machine automatically conducts various quality checks to assess print accuracy and consistency.</value>
+  </data>
+  <data name="keyInfoDeleteRecipe" xml:space="preserve">
+    <value>All the parameter's information saved for this recipe will be deleted forever.</value>
+  </data>
+  <data name="keyInformationCalibrationPH" xml:space="preserve">
+    <value>During printing, the machine automatically conducts various quality checks to 
+                           assess print accuracy and consistency:</value>
+  </data>
+  <data name="keyInformationDeletedForever" xml:space="preserve">
+    <value>All the parameter's information saved for this recipe will be deleted forever</value>
+  </data>
+  <data name="keyInk" xml:space="preserve">
+    <value>Ink</value>
+  </data>
+  <data name="keyInvalidInputEnterValidInput" xml:space="preserve">
+    <value>Invalid input, please enter a valid number or a number without decimals ;)</value>
+  </data>
+  <data name="keyJobCreator" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyJobMeters" xml:space="preserve">
+    <value>Job meters</value>
+  </data>
+  <data name="keyJobName" xml:space="preserve">
+    <value>Job name</value>
+  </data>
+  <data name="keyJobsDownladedReadyToPrint" xml:space="preserve">
+    <value>All jobs downloaded and ready to print</value>
+  </data>
+  <data name="keyJobsDownloaded" xml:space="preserve">
+    <value>Jobs downloaded</value>
+  </data>
+  <data name="keyJobsToPrintText" xml:space="preserve">
+    <value>The jobs to be printed will appear here</value>
+  </data>
+  <data name="KeyKeepRecipe" xml:space="preserve">
+    <value>Keep recipe</value>
+  </data>
+  <data name="keyKg" xml:space="preserve">
+    <value>Kg</value>
+  </data>
+  <data name="keyLabels" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyLayonPressure" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyLayOnRoller" xml:space="preserve">
+    <value>Lay on roller</value>
+  </data>
+  <data name="keyLeft" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="keyLenght" xml:space="preserve">
+    <value>Lenght</value>
+  </data>
+  <data name="keyLevelAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyLineal" xml:space="preserve">
+    <value>Lineal</value>
+  </data>
+  <data name="keyListError" xml:space="preserve">
+    <value>List error</value>
+  </data>
+  <data name="keyLoadingOrders" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyLockout" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyLoggedIn" xml:space="preserve">
+    <value>logged in</value>
+  </data>
+  <data name="keyLogin" xml:space="preserve">
+    <value>LOGIN</value>
+  </data>
+  <data name="keyLogIntoYourAccount" xml:space="preserve">
+    <value>Log into your account</value>
+  </data>
+  <data name="keyLoginView" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="keyLogout" xml:space="preserve">
+    <value>LOGOUT</value>
+  </data>
+  <data name="keyLogoutCurrentAccount" xml:space="preserve">
+    <value>Logout current account</value>
+  </data>
+  <data name="keyLogOutShutdown" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="keyLogoutView" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="keyMachineMotorDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMachineMotorWebBrakeAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMagenta" xml:space="preserve">
+    <value>Magenta</value>
+  </data>
+  <data name="keyMagentaPattern" xml:space="preserve">
+    <value>Magenta Pattern</value>
+  </data>
+  <data name="keyMainCoolingSupply230vProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMainCoolingSupply400vProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMainSwitchTurnedOff" xml:space="preserve">
+    <value>Main Switch Turned off</value>
+  </data>
+  <data name="keyMaintenance" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMaintenanceState" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="keyMakeSureCappingLevel" xml:space="preserve">
+    <value>Make sure capping bath is at the indicated level</value>
+  </data>
+  <data name="keyMakeSureWipes" xml:space="preserve">
+    <value>Make sure the wipes are clean</value>
+  </data>
+  <data name="keyManual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="keyManualTreater" xml:space="preserve">
+    <value>Manual (W)</value>
+  </data>
+  <data name="keyMark" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMaterial" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="keyMaterialThickness" xml:space="preserve">
+    <value>MaterialThickness</value>
+  </data>
+  <data name="keyMaterialType" xml:space="preserve">
+    <value>Material Type</value>
+  </data>
+  <data name="keyMaterialWidth" xml:space="preserve">
+    <value>Material width</value>
+  </data>
+  <data name="keyMax" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="keyMaxCalibrationFail" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMaxPowerTreater" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMaxSpeedTreater" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMeters" xml:space="preserve">
+    <value>Meters</value>
+  </data>
+  <data name="keyMetersMin" xml:space="preserve">
+    <value>m/min</value>
+  </data>
+  <data name="keyMin" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="keyMinCalibrationFail" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMinPowerTreater" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMinSpeedTreater" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyMm" xml:space="preserve">
+    <value>mm</value>
+  </data>
+  <data name="keyMoving" xml:space="preserve">
+    <value>Moving</value>
+  </data>
+  <data name="keyMovingPrintBars" xml:space="preserve">
+    <value>Moving print bars to print position</value>
+  </data>
+  <data name="keyName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyNameForNewRecipe" xml:space="preserve">
+    <value>What name do you want to use for this recipe?</value>
+  </data>
+  <data name="keyNameGeneratedAutoRecipe" xml:space="preserve">
+    <value>We generated automatically a name from the parameters you choose but feel free to change it if necessary.</value>
+  </data>
+  <data name="keyNeedToCreateANewRecipe" xml:space="preserve">
+    <value>You need to create a new Recipe, the actual has been used</value>
+  </data>
+  <data name="keyNewRecipe" xml:space="preserve">
+    <value>NEW RECIPE</value>
+  </data>
+  <data name="keyNewRecipeProductionFinished" xml:space="preserve">
+    <value>NEW RECIPE PRODUCTION FINISHED</value>
+  </data>
+  <data name="keyNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="keyNipRollFanProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyNoRegisterCappingCover" xml:space="preserve">
+    <value>There was no register of the Cover box to be open. Please is important to perform the capping inspection.</value>
+  </data>
+  <data name="keyNormalStopState" xml:space="preserve">
+    <value>Normal stop</value>
+  </data>
+  <data name="keyNoTaper" xml:space="preserve">
+    <value>NO TAPER</value>
+  </data>
+  <data name="keyNotCalibrated" xml:space="preserve">
+    <value>Not calibrated</value>
+  </data>
+  <data name="keyNotCorrectKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyNotFoundResource" xml:space="preserve">
+    <value>Resource not found</value>
+  </data>
+  <data name="keyNotificationSolved" xml:space="preserve">
+    <value>These notifications are already solved.</value>
+  </data>
+  <data name="keyNotificationsPendingToBeSolved" xml:space="preserve">
+    <value>These notifications are pending to be solved.</value>
+  </data>
+  <data name="keyNotReadyToPrint" xml:space="preserve">
+    <value>Not ready to print</value>
+  </data>
+  <data name="keyNoWarningsJobQueue" xml:space="preserve">
+    <value>There are no warnings on the jobs of the job queue</value>
+  </data>
+  <data name="keyNozzlesDeviated" xml:space="preserve">
+    <value>Nozzles deviated</value>
+  </data>
+  <data name="keyNozzlesOut" xml:space="preserve">
+    <value>Nozzles out</value>
+  </data>
+  <data name="keyNumberOfJobs" xml:space="preserve">
+    <value>Number of jobs</value>
+  </data>
+  <data name="keyOffset" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyOpenDoor" xml:space="preserve">
+    <value>Open door</value>
+  </data>
+  <data name="keyOperatorSide" xml:space="preserve">
+    <value>Operator side</value>
+  </data>
+  <data name="keyOpticalSensorPosition" xml:space="preserve">
+    <value>Optical sensor position (mm)</value>
+  </data>
+  <data name="keyOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="keyOrange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="keyOverrwriteRecipe" xml:space="preserve">
+    <value>Overwrite current recipe</value>
+  </data>
+  <data name="keyParametersAutomaticallyGenerated" xml:space="preserve">
+    <value>We generated automatically a name from the parameters you choose but feel free to change it if necessary.</value>
+  </data>
+  <data name="keyPartN" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPartName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="keyPasswordIncorrect" xml:space="preserve">
+    <value>Password Incorrect</value>
+  </data>
+  <data name="keyPatternsAndTests" xml:space="preserve">
+    <value>Patterns and tests</value>
+  </data>
+  <data name="keyPause" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPendingNotifications" xml:space="preserve">
+    <value>Pending Notifications</value>
+  </data>
+  <data name="keyPendingNotificationsText" xml:space="preserve">
+    <value>There are pending alerts in the notification center.</value>
+  </data>
+  <data name="keyPercentage" xml:space="preserve">
+    <value>Percentage</value>
+  </data>
+  <data name="keyPercentageCuring" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPercentagePinning" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPhCommunication" xml:space="preserve">
+    <value>Printhead communication error, please check connection</value>
+  </data>
+  <data name="keyPhotocellDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPhPositionerDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPhPositionerMotorAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPhPositioningAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPhReplacement" xml:space="preserve">
+    <value>Ph Replacement</value>
+  </data>
+  <data name="keyPixels" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPlaceAnylox" xml:space="preserve">
+    <value>Place Anylox</value>
+  </data>
+  <data name="keyPlcConnectionError" xml:space="preserve">
+    <value>Connection lost with PLC</value>
+  </data>
+  <data name="keyPlcError" xml:space="preserve">
+    <value>PLC ERROR</value>
+  </data>
+  <data name="keyPlcErrorReviseConnection" xml:space="preserve">
+    <value>PLC error, please revise the connection</value>
+  </data>
+  <data name="keyPleaseReviseFieldsWithErrors" xml:space="preserve">
+    <value>Please review the fields with error</value>
+  </data>
+  <data name="keyPleaseSelectRecipe" xml:space="preserve">
+    <value>Please select a recipe to edit parameters</value>
+  </data>
+  <data name="keyPoweringOnDrivers" xml:space="preserve">
+    <value>Powering on drivers</value>
+  </data>
+  <data name="keyPoweringOnPrintheads" xml:space="preserve">
+    <value>Powering on printheads</value>
+  </data>
+  <data name="keyPowerOffIS" xml:space="preserve">
+    <value>Power off inspection system</value>
+  </data>
+  <data name="keyPreExhaustFan" xml:space="preserve">
+    <value>Pre expulsion fan</value>
+  </data>
+  <data name="keyPreHome" xml:space="preserve">
+    <value>Pre-Home</value>
+  </data>
+  <data name="keyPreImpulsionFan" xml:space="preserve">
+    <value>Pre impulsion fan</value>
+  </data>
+  <data name="keyPrePinningTemperature" xml:space="preserve">
+    <value>Pre pinning temperature</value>
+  </data>
+  <data name="keyPressButtonCalibration" xml:space="preserve">
+    <value>Press Start Button 3 times</value>
+  </data>
+  <data name="keyPressEmergencyButton" xml:space="preserve">
+    <value>Press emergency button &amp; turn main switch off</value>
+  </data>
+  <data name="keyPressureAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPreStandByState" xml:space="preserve">
+    <value>Pre-Stand By</value>
+  </data>
+  <data name="keyPreStartState" xml:space="preserve">
+    <value>Pre-Start</value>
+  </data>
+  <data name="keyPreview" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPreviousCalibration" xml:space="preserve">
+    <value>Previous Calibration</value>
+  </data>
+  <data name="keyPrimer" xml:space="preserve">
+    <value>Primer</value>
+  </data>
+  <data name="keyPrimerCleaningProcessCompleted" xml:space="preserve">
+    <value>Primer cleaning process complete</value>
+  </data>
+  <data name="keyPrimerConfiguration" xml:space="preserve">
+    <value>Primer configuration</value>
+  </data>
+  <data name="keyPrimerInitiatedError" xml:space="preserve">
+    <value>Primer initiated, unable to disable. Please review the recipe settings.</value>
+  </data>
+  <data name="keyPrimerIsRunning" xml:space="preserve">
+    <value>Primer is running, and you will lose all. Are you sure you want to stop it?</value>
+  </data>
+  <data name="keyPrimerUnit" xml:space="preserve">
+    <value>Primer Unit</value>
+  </data>
+  <data name="keyPrimerWarning" xml:space="preserve">
+    <value>Primer warning</value>
+  </data>
+  <data name="keyPrimerWebBreak" xml:space="preserve">
+    <value>Primer web break</value>
+  </data>
+  <data name="keyPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="keyPrintBar" xml:space="preserve">
+    <value>Print Bar</value>
+  </data>
+  <data name="keyPrintBars" xml:space="preserve">
+    <value>Print Bars</value>
+  </data>
+  <data name="keyPrintedColorUniformity" xml:space="preserve">
+    <value>Printed Color uniformity</value>
+  </data>
+  <data name="keyPrintedNozzleTest" xml:space="preserve">
+    <value>Printed nozzle test</value>
+  </data>
+  <data name="keyPrintHead" xml:space="preserve">
+    <value>Print Head</value>
+  </data>
+  <data name="keyPrintheadCalibration" xml:space="preserve">
+    <value>Printhead Calibration</value>
+  </data>
+  <data name="keyPrintHeadReplacement" xml:space="preserve">
+    <value>PH Replacement</value>
+  </data>
+  <data name="keyPrintHeads" xml:space="preserve">
+    <value>Print heads</value>
+  </data>
+  <data name="keyPrintHeadsDoor" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPrintHeadsError" xml:space="preserve">
+    <value>PrintHeads Error</value>
+  </data>
+  <data name="keyPrinting" xml:space="preserve">
+    <value>Printing</value>
+  </data>
+  <data name="keyPrintingCalibrationProcess" xml:space="preserve">
+    <value>Printing Calibration Process</value>
+  </data>
+  <data name="keyPrintingTime" xml:space="preserve">
+    <value>Printing Time</value>
+  </data>
+  <data name="keyPrintingUnitCalenderDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPrintingUnitCalenderTensionAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPrintingUnitTension" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPrintingUnitWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPrintUnit" xml:space="preserve">
+    <value>Print Unit</value>
+  </data>
+  <data name="keyPrintUnitBackDoor" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyProceedCancellation" xml:space="preserve">
+    <value>Proceed with cancellation?</value>
+  </data>
+  <data name="keyProceedWithCancellation" xml:space="preserve">
+    <value>Proceed with cancellation ?</value>
+  </data>
+  <data name="keyProdExhaustFan" xml:space="preserve">
+    <value>Prod expulsion fan</value>
+  </data>
+  <data name="keyProdImpulsionFan" xml:space="preserve">
+    <value>Prod impulsion fan</value>
+  </data>
+  <data name="keyProdPinningTemperature" xml:space="preserve">
+    <value>Prod pinning temperature</value>
+  </data>
+  <data name="keyProductionState" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="keyProof" xml:space="preserve">
+    <value>Proof</value>
+  </data>
+  <data name="keyProperties" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyProportionalTreater" xml:space="preserve">
+    <value>Proportional</value>
+  </data>
+  <data name="keyPumpInPidError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPumpOutPidError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyPurge" xml:space="preserve">
+    <value>PURGE</value>
+  </data>
+  <data name="keyReadyToPrint" xml:space="preserve">
+    <value>Ready to print</value>
+  </data>
+  <data name="keyReason" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRecalibrate" xml:space="preserve">
+    <value>Recalibrate</value>
+  </data>
+  <data name="keyRecipe" xml:space="preserve">
+    <value>RECIPE</value>
+  </data>
+  <data name="keyRecipeError" xml:space="preserve">
+    <value>Recipe error</value>
+  </data>
+  <data name="keyRecipeModificationError" xml:space="preserve">
+    <value>Recipe modification requires Stand By mode for safe adjustment.</value>
+  </data>
+  <data name="keyRecipeModifiedDiscard" xml:space="preserve">
+    <value>The actual recipe is modified, are you sure you want to discard changes?</value>
+  </data>
+  <data name="keyRecipes" xml:space="preserve">
+    <value>Recipes</value>
+  </data>
+  <data name="keyRecipeSaved" xml:space="preserve">
+    <value>Recipe saved</value>
+  </data>
+  <data name="keyRecipeSavedSuccesfully" xml:space="preserve">
+    <value>The recipe was saved succesfully</value>
+  </data>
+  <data name="keyRecirculation" xml:space="preserve">
+    <value>RECIRCULATION </value>
+  </data>
+  <data name="keyRecirculationUnit" xml:space="preserve">
+    <value>Recirculation unit</value>
+  </data>
+  <data name="keyReelChanged" xml:space="preserve">
+    <value>Reel changed</value>
+  </data>
+  <data name="keyRegister" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="keyRegisterErrorPrintDirection" xml:space="preserve">
+    <value>Register Error Printing Direction</value>
+  </data>
+  <data name="keyRegisterErrorWidthDirection" xml:space="preserve">
+    <value>Register Error Width Direction</value>
+  </data>
+  <data name="keyRemoveFromQueue" xml:space="preserve">
+    <value>Remove from Queue</value>
+  </data>
+  <data name="keyResetingMachine" xml:space="preserve">
+    <value>Reseting machine...</value>
+  </data>
+  <data name="keyResetingMachineButton" xml:space="preserve">
+    <value>Button Pressed Reseting Machine...</value>
+  </data>
+  <data name="keyResetMachine" xml:space="preserve">
+    <value>Reset Machine</value>
+  </data>
+  <data name="keyResetMachinePressBlue" xml:space="preserve">
+    <value>To reset the machine, simply press the designated blue reset button located on the control panel.</value>
+  </data>
+  <data name="keyRestart" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyResultsCalibrationPH" xml:space="preserve">
+    <value>These results show if there is any difference between this calibration and the past ones.
+                                 Please confirm if the calibration is complete or a recalibration is needed.</value>
+  </data>
+  <data name="keyRewAntiStaticBarsAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRewFanProtecion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRewinder" xml:space="preserve">
+    <value>REWINDER</value>
+  </data>
+  <data name="keyRewinderDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRewinderTension" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRewinderTensionAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRewinderWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRewShaftlessDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRotate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyRunProof" xml:space="preserve">
+    <value>Run a proof</value>
+  </data>
+  <data name="keySamples" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySampleWithCorrectionsPrinted" xml:space="preserve">
+    <value>Sample with corrections printed</value>
+  </data>
+  <data name="keySave" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySaveChangedValues" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySaveChanges" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="keySearch" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySearchJob" xml:space="preserve">
+    <value>Search a job</value>
+  </data>
+  <data name="keySearchRecipe" xml:space="preserve">
+    <value>Search a recipe</value>
+  </data>
+  <data name="keySelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="keySelectOrCreateRecipe" xml:space="preserve">
+    <value>Select or create a new recipe for the new reel.</value>
+  </data>
+  <data name="keySelectRecipe" xml:space="preserve">
+    <value>SELECT RECIPE</value>
+  </data>
+  <data name="keySelectRecipeAllParametersApply" xml:space="preserve">
+    <value>Are you sure you want to select this recipe? All parameters will be applied to the machine</value>
+  </data>
+  <data name="keySerialN" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySet0CBPosition" xml:space="preserve">
+    <value>Set 0 CB position</value>
+  </data>
+  <data name="keySet0Positon" xml:space="preserve">
+    <value>Set 0 position</value>
+  </data>
+  <data name="keySetHomePosition" xml:space="preserve">
+    <value>Set home position</value>
+  </data>
+  <data name="keySetMettersGap" xml:space="preserve">
+    <value>Specify the meters you want to print between jobs and the pattern to be printed on that space.</value>
+  </data>
+  <data name="keySetPHReplacementPosition" xml:space="preserve">
+    <value>Set PH Replacement position</value>
+  </data>
+  <data name="keySetPosition" xml:space="preserve">
+    <value>Set position</value>
+  </data>
+  <data name="keySetPrintPosition" xml:space="preserve">
+    <value>Set print position</value>
+  </data>
+  <data name="keyShutDown" xml:space="preserve">
+    <value>Shut Down</value>
+  </data>
+  <data name="keyShutdownComplete" xml:space="preserve">
+    <value>Shutdown Complete</value>
+  </data>
+  <data name="keyShutdownMachine" xml:space="preserve">
+    <value>Shutdown Machine</value>
+  </data>
+  <data name="keyShutdownMachineProcess" xml:space="preserve">
+    <value>Shutdown Machine Process</value>
+  </data>
+  <data name="keyShutdownMaintenance" xml:space="preserve">
+    <value>Shutdown Maintenance</value>
+  </data>
+  <data name="keyShutdownMaintenance1" xml:space="preserve">
+    <value>Daily Maintenance: Step 1/2</value>
+  </data>
+  <data name="keyShutdownMaintenance2" xml:space="preserve">
+    <value>Daily maintenance: Step 2/2</value>
+  </data>
+  <data name="keyShutDownPrecessCancelText" xml:space="preserve">
+    <value>Are you sure you want to cancel the ongoing calibration process? Cancelling now will leave the process incomplete, requiring a restart from the beginning.</value>
+  </data>
+  <data name="keyShutingDownInkingSystem" xml:space="preserve">
+    <value>Shutting down inking systems</value>
+  </data>
+  <data name="keyShuttingDownMachine" xml:space="preserve">
+    <value>Shutting down the machine...</value>
+  </data>
+  <data name="keySize" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="keySleeveChanged" xml:space="preserve">
+    <value>Sleeve changed</value>
+  </data>
+  <data name="keySleevePressure" xml:space="preserve">
+    <value>Sleeve pressure</value>
+  </data>
+  <data name="keySleevePressureRecipe" xml:space="preserve">
+    <value>Sleeve pressure (bar)</value>
+  </data>
+  <data name="keySleveExtraction" xml:space="preserve">
+    <value>SLEVE EXTRACTION</value>
+  </data>
+  <data name="keySpeed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySpeedMmin" xml:space="preserve">
+    <value>Speed (m/min)</value>
+  </data>
+  <data name="keySpliceState" xml:space="preserve">
+    <value>Splice</value>
+  </data>
+  <data name="keySptConnectionError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyStandBy" xml:space="preserve">
+    <value>Stand by</value>
+  </data>
+  <data name="keyStandByState" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyStartingDiameterTaper" xml:space="preserve">
+    <value>Starting taper diameter</value>
+  </data>
+  <data name="keyStartingInkingSystem" xml:space="preserve">
+    <value>Starting inking system</value>
+  </data>
+  <data name="keyStartingPneumaticSystem" xml:space="preserve">
+    <value>Starting pneumatic system</value>
+  </data>
+  <data name="keyStartingPrimer" xml:space="preserve">
+    <value>Starting Primer</value>
+  </data>
+  <data name="keyStartPrimer" xml:space="preserve">
+    <value>Start Primer</value>
+  </data>
+  <data name="keyStartPrintheadCalibration" xml:space="preserve">
+    <value>Start Printheads Calibration</value>
+  </data>
+  <data name="keyStartProcess" xml:space="preserve">
+    <value>Start process</value>
+  </data>
+  <data name="keyStartTaperDiameter" xml:space="preserve">
+    <value>Starting taper diameter (mm)</value>
+  </data>
+  <data name="keyStartUnit" xml:space="preserve">
+    <value>Start unit</value>
+  </data>
+  <data name="keyStartupComplete" xml:space="preserve">
+    <value>Startup Complete</value>
+  </data>
+  <data name="keyStartupMachine" xml:space="preserve">
+    <value>Startup Machine</value>
+  </data>
+  <data name="keyStartUpMachineCalibProcess" xml:space="preserve">
+    <value>Start up machine process involves conducting a thorough nozzle check to detect any obstructions or deviations in ink flow, followed by an assessment of color uniformity to ensure precise and consistent color reproduction. This process ensures enhanced print quality by optimizing the accuracy and uniformity of printheads, resulting in high-quality outputs.</value>
+  </data>
+  <data name="keyStartUpMachineCompleted" xml:space="preserve">
+    <value>Startup Machine Process Completed</value>
+  </data>
+  <data name="keyStartupMachineIsNeed" xml:space="preserve">
+    <value>Startup Machine is needed to start printing</value>
+  </data>
+  <data name="keyStartupMachinePrint" xml:space="preserve">
+    <value>Startup Machine is needed to start printing</value>
+  </data>
+  <data name="keyStartUpMachineProcess" xml:space="preserve">
+    <value>Startup Machine Process</value>
+  </data>
+  <data name="keyStartupMachineTextExplanation" xml:space="preserve">
+    <value>Start up machine process involves conducting a thorough nozzle check to detect any obstructions or deviations in ink flow, followed by an assessment of color uniformity to ensure precise and consistent color reproduction. This process ensures enhanced print quality by optimizing the accuracy and uniformity of printheads, resulting in high-quality outputs.</value>
+  </data>
+  <data name="keyStateNotFound" xml:space="preserve">
+    <value>State not found</value>
+  </data>
+  <data name="keyStep" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="keyStop" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyStopAll" xml:space="preserve">
+    <value>Stop All</value>
+  </data>
+  <data name="keyStopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="keyStopPrimer" xml:space="preserve">
+    <value>Stop primer</value>
+  </data>
+  <data name="keyStopUnit" xml:space="preserve">
+    <value>Stop Unit</value>
+  </data>
+  <data name="keyStream" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySureToDeleteFile" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySureToDeleteFolder" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySureToDeleteRecipe" xml:space="preserve">
+    <value>Are you sure you want to delete this recipe?</value>
+  </data>
+  <data name="keySurname" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keySystemPerformsAutomatic" xml:space="preserve">
+    <value>System automatically performs initial checks and preparations for standby mode:</value>
+  </data>
+  <data name="keyTaperPressure" xml:space="preserve">
+    <value>Taper pressure</value>
+  </data>
+  <data name="keyTaperPressurePercentage" xml:space="preserve">
+    <value>Taper pressure percentage (%)</value>
+  </data>
+  <data name="keyTaperTension" xml:space="preserve">
+    <value>Taper tension</value>
+  </data>
+  <data name="keyTaperTensionPercentage" xml:space="preserve">
+    <value>Taper tension percentage (%)</value>
+  </data>
+  <data name="keyTaperType" xml:space="preserve">
+    <value>Taper Type</value>
+  </data>
+  <data name="keyTempAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyTemperatureRecipe" xml:space="preserve">
+    <value>Temperature (Cº)</value>
+  </data>
+  <data name="keyTension" xml:space="preserve">
+    <value>Tension</value>
+  </data>
+  <data name="keyTensionRecipe" xml:space="preserve">
+    <value>Tension (Kg)</value>
+  </data>
+  <data name="keyTestCodes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyTextToContinue" xml:space="preserve">
+    <value>Would you like to continue with the shutdown?</value>
+  </data>
+  <data name="keyThereWasAWebBreak" xml:space="preserve">
+    <value>There was a web break</value>
+  </data>
+  <data name="keyThickness" xml:space="preserve">
+    <value>Thickness</value>
+  </data>
+  <data name="keyTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="keyTimeSpent" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyTo" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyTotalMeters" xml:space="preserve">
+    <value>Total meters</value>
+  </data>
+  <data name="keyTotalProducedMeters" xml:space="preserve">
+    <value>Total produced meters</value>
+  </data>
+  <data name="keyTotalRemainingTime" xml:space="preserve">
+    <value>Total remaining time</value>
+  </data>
+  <data name="keyTotalTime" xml:space="preserve">
+    <value>Total time</value>
+  </data>
+  <data name="keyTransmisionSide" xml:space="preserve">
+    <value>Transmision side</value>
+  </data>
+  <data name="keyTransmissionSide" xml:space="preserve">
+    <value>Transmission side</value>
+  </data>
+  <data name="keyTreaterPower" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyTreaterProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyTurnOffDrum" xml:space="preserve">
+    <value>Turn Off Drum TC</value>
+  </data>
+  <data name="keyTurnOnDrum" xml:space="preserve">
+    <value>Turn On Drum TC</value>
+  </data>
+  <data name="keyUnknown" xml:space="preserve">
+    <value>UNKNOWN</value>
+  </data>
+  <data name="keyUnwAntiStaticBarsAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUnwFanProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUnwinder" xml:space="preserve">
+    <value>Unwinder</value>
+  </data>
+  <data name="keyUnwinderDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUnwinderTension" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUnwinderTensionAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUnwinderWebBreak" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUnwShaftlessDriveAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUp" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="keyUpdatedSuccesfully" xml:space="preserve">
+    <value> updated successfully, all parameters applied.</value>
+  </data>
+  <data name="keyUser" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="keyUserAlreadyExists" xml:space="preserve">
+    <value>User already exists</value>
+  </data>
+  <data name="keyUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="keyUserNotFound" xml:space="preserve">
+    <value>USER NOT FOUND, PLEASE LOGIN</value>
+  </data>
+  <data name="keyUserNotValid" xml:space="preserve">
+    <value>User not valid</value>
+  </data>
+  <data name="keyUserType" xml:space="preserve">
+    <value>User Type</value>
+  </data>
+  <data name="keyUvCoolingMainContactor" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUvCoolingProtection" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUvCuringAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUvLampsDoor" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUvPinningAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUvPositionerMotorAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyUvPositioningAlarm" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyValueBetween" xml:space="preserve">
+    <value>needs to be between</value>
+  </data>
+  <data name="keyValueOutRangeInput" xml:space="preserve">
+    <value>Value out of range, your input:</value>
+  </data>
+  <data name="keyVerifiedKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyViolet" xml:space="preserve">
+    <value>Violet</value>
+  </data>
+  <data name="keyWaitingStartingPrimer" xml:space="preserve">
+    <value>Wait for these steps to finish before you can continue.</value>
+  </data>
+  <data name="keyWaitingToPressButton" xml:space="preserve">
+    <value>Waiting to press the button</value>
+  </data>
+  <data name="keyWaitResetButton" xml:space="preserve">
+    <value>Press button</value>
+  </data>
+  <data name="keyWarningsCount" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyWaste" xml:space="preserve">
+    <value>Waste</value>
+  </data>
+  <data name="keyWater" xml:space="preserve">
+    <value>Water</value>
+  </data>
+  <data name="keyWelcomeBack" xml:space="preserve">
+    <value>Welcome Back!</value>
+  </data>
+  <data name="keyWettingAnilox" xml:space="preserve">
+    <value>Wetting anilox</value>
+  </data>
+  <data name="keyWhiteDigital" xml:space="preserve">
+    <value>WHITE DIGITAL</value>
+  </data>
+  <data name="keyWhiteGap" xml:space="preserve">
+    <value>Empty white space</value>
+  </data>
+  <data name="keyWidth" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="keyWindow" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyWipe" xml:space="preserve">
+    <value>WIPE</value>
+  </data>
+  <data name="keyWrongValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyXOfssetMixData" xml:space="preserve">
+    <value>X Offset (Mixed data)</value>
+  </data>
+  <data name="keyYellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="keyYOfssetMixData" xml:space="preserve">
+    <value>Y Offset (Mixed data)</value>
+  </data>
+  <data name="keyZero" xml:space="preserve">
+    <value />
+  </data>
+  <data name="keyµm" xml:space="preserve">
+    <value>µm</value>
+  </data>
+  <data name="keyºC" xml:space="preserve">
+    <value>ºC</value>
+  </data>
+  <data name="M0_ALARMS_DTO" xml:space="preserve">
+    <value>Machine alarm</value>
+  </data>
+  <data name="M1_ALARMS_DTO" xml:space="preserve">
+    <value>Unwinder alarm</value>
+  </data>
+  <data name="M1_WARNINGS_DTO" xml:space="preserve">
+    <value>Unwinder warning</value>
+  </data>
+  <data name="M2_ALARMS_DTO" xml:space="preserve">
+    <value>Primer alarm</value>
+  </data>
+  <data name="M2_WARNINGS_DTO" xml:space="preserve">
+    <value>Primer warning</value>
+  </data>
+  <data name="M4_ALARMS_DTO" xml:space="preserve">
+    <value>Print Unit alarm</value>
+  </data>
+  <data name="M4_WARNINGS_DTO" xml:space="preserve">
+    <value>Print Unit warning</value>
+  </data>
+  <data name="M5_ALARMS_DTO" xml:space="preserve">
+    <value>White Unit alarm</value>
+  </data>
+  <data name="M5_WARNINGS_DTO" xml:space="preserve">
+    <value>White warning</value>
+  </data>
+  <data name="M7_ALARMS_DTO" xml:space="preserve">
+    <value>Rewinder alarm</value>
+  </data>
+  <data name="M7_WARNINGS_DTO" xml:space="preserve">
+    <value>Rewinder warning</value>
+  </data>
+</root>

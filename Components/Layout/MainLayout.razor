@@ -1,0 +1,938 @@
+﻿@inherits LayoutComponentBase
+@implements IAsyncDisposable
+@using System.Collections.ObjectModel
+@using WhiteFlexo
+@inject ModuleDataService ModuleService
+@inject OpcUaClient opcUaClient
+@inject ReadDTOService ReadDTO
+@inject IJSRuntime JS
+@inject IToastService ToastService
+@inject CultureResources CultureResources
+
+<style>
+    /* Your existing CSS styles go here... */
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        user-select: none; /* Standard */
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE/Edge */
+    }
+
+    .sidabar {
+        display: flex;
+        flex-direction: column;
+        justify-content: top;
+        align-items: center;
+        padding: 20px;
+        color: white;
+        width: 8vw;
+        height: 100vh;
+        background: #000000;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+
+    /* New style for the clickable speed button in the sidebar */
+    .sidebar-button {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 14px;
+        gap: 4px;
+        width: 90%;
+        min-height: 52px;
+        background: #FFFFFF;
+        color: #000000;
+        border: 1px solid #A3A3A3;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+        .sidebar-button:hover {
+            background-color: #f0f0f0;
+        }
+
+    .main_container {
+        display: flex;
+        flex-grow: 1;
+        width: calc(100vw - 8vw); /* Account for sidebar width */
+        height: 100vh;
+    }
+
+    .container, .modal-container, .container_modals {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 92vw;
+        height: 90vh; /* Use full width of the parent container */
+        padding: 0; /* Remove padding that may cause gaps */
+        margin: 0; /* Remove any margin causing unwanted space */
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .modal-container {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 16px;
+        background: #F5F5F5;
+    }
+
+    .modals {
+        width: 92vw;
+        height: 80vh; /* Use full width of the parent container */
+        padding: 0; /* Remove padding that may cause gaps */
+        margin: 0; /* Remove any margin causing unwanted space */
+        background: #F5F5F5;
+    }
+
+    .container_modals {
+        flex-wrap: nowrap; /* Prevent wrapping */
+        padding: 20px;
+        gap: 16px;
+        background: #F5F5F5;
+    }
+
+    .module {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 100%;
+        width: 100%;
+        background: #FFFFFF;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box; /* Include padding and borders in element's size */
+    }
+
+    .tension_section {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        padding: 20px;
+        width: 100%;
+    }
+
+        .tension_section ul {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px 14px;
+            gap: 8px;
+            width: 100%;
+            height: 52px;
+            background: #FFFFFF;
+            border: 1px solid #A3A3A3;
+            border-radius: 8px;
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+            cursor: pointer;
+        }
+
+    .section_header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px;
+        gap: 10px;
+        width: 100%;
+        height: 7%;
+        color: white;
+        backdrop-filter: blur(6px);
+        border-radius: 4px 4px 0px 0px;
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    .image {
+        margin-bottom: 20px;
+        padding: 15px;
+        align-self: center;
+        border: 0px solid gray;
+    }
+
+        .image img {
+            align-self: center;
+        }
+
+    .alarms_bar {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        gap: 0px;
+        width: calc(100vw - 8vw); /* Exclude sidebar width */
+        height: 10vh;
+        background: #FFFFFF;
+        border-bottom: 3px solid #000000;
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    .keypad-overlay,
+    .alarms-overlay,
+    .exception-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+
+    .exception-box {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        width: 80vw;
+        max-width: 800px;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .exception-box h3 {
+            color: #D30D3A;
+            margin-top: 0;
+        }
+
+    .exception-details {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        flex-grow: 1;
+        font-family: monospace;
+        font-size: 0.875rem;
+    }
+
+    .bell {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 12px;
+        gap: 8px;
+        margin: 0 auto;
+        width: 72px;
+        height: 56px;
+        cursor: pointer;
+        background: #FFFFFF;
+        border-radius: 6px;
+        position: absolute;
+        right: 10px;
+    }
+
+    .alarms-list {
+        padding: 10px;
+        display: flex;
+        width: 85vw;
+        gap: 12px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-behavior: smooth; /* Optional: for smoother scroll */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+        .alarms-list::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+
+
+    .alarm-item {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 6px 12px 6px 6px;
+        gap: 12px;
+        height: 45px;
+        background: #FEF0C7;
+        mix-blend-mode: multiply;
+        border-radius: 59px;
+        flex: none;
+        order: 3;
+        flex-grow: 0;
+    }
+
+        .alarm-item.warning {
+            background: #FEF0C7;
+            color: #B54708;
+        }
+
+        .alarm-item.error {
+            background: #FFF0F3;
+            color: #991B1B;
+        }
+
+        .alarm-item p {
+            margin: 0;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 25px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+    .alarm-type {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 4px 12px 4px 8px;
+        gap: 4px;
+        height: 33px;
+        background: #DC7803;
+        mix-blend-mode: normal;
+        border-radius: 25px;
+        color: #FFFFFF;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+
+        .alarm-type.warning {
+            background: #DC7803;
+        }
+
+        .alarm-type.error {
+            background: #D30D3A;
+        }
+
+        .alarm-type p {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            margin: 0;
+            line-height: 25px;
+            text-align: center;
+            color: #FFFFFF;
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+</style>
+
+<div class="main_container">
+    <div class="sidabar">
+
+
+        <div style="padding-bottom: 20px; font-size: 2rem; text-align: center;">
+            @if (opcUaClient.IsConnected)
+            {
+                <span title="Conectado al PLC" style="color: mediumspringgreen; display: inline-block; width: 1.5em; height: 1.5em;">
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+                       <path fill="#00ff2a" d="M256 1216q0-89 34-171t97-146l227-226l633 633l-226 227q-63 63-145 97t-172 34q-73 0-141-22t-127-67l-327 326l-90-90l326-327q-44-58-66-126t-23-142zm448 320q64 0 122-24t104-70l136-136l-452-452l-136 136q-45 45-69 103t-25 123q0 66 25 124t68 102t102 69t125 25zm871-1100q44 58 66 126t23 142q0 89-34 171t-97 146l-227 226l-633-633l226-227q63-63 145-97t172-34q73 0 141 22t127 67l327-326l90 90l-326 327zm-133 494q45-45 69-103t25-123q0-66-25-124t-69-101t-102-69t-124-26q-64 0-122 24t-104 70L854 614l452 452l136-136z"/>
+                    </svg>
+                </span>
+            }
+            else
+            {
+                <span title="Desconectado del PLC" style="color: crimson; display: inline-block; width: 1.5em; height: 1.5em;">
+                   <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 2048 2048">
+                       <path fill="#ff0000" d="M256 1216q0-89 34-171t97-146l227-226l633 633l-226 227q-63 63-145 97t-172 34q-73 0-141-22t-127-67l-327 326l-90-90l326-327q-44-58-66-126t-23-142zm448 320q64 0 122-24t104-70l136-136l-452-452l-136 136q-45 45-69 103t-25 123q0 66 25 124t68 102t102 69t125 25zm871-1100q44 58 66 126t23 142q0 89-34 171t-97 146l-227 226l-633-633l226-227q63-63 145-97t172-34q73 0 141 22t127 67l327-326l90 90l-326 327zm-133 494q45-45 69-103t25-123q0-66-25-124t-69-101t-102-69t-124-26q-64 0-122 24t-104 70L854 614l452 452l136-136z"/>
+                    </svg>
+                </span>
+            }
+        </div>
+        <div class="sidebar-section ios-battery">
+            <div class="battery-wrapper">
+                <svg class="battery-svg" viewBox="0 0 28 14" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.75" y="0.75" width="23.5" height="12.5" rx="3"
+                          fill="none"
+                          stroke="rgba(255,255,255,0.55)"
+                          stroke-width="1" />
+                    <rect x="2.5"
+                          y="2.5"
+                          width="@(BatteryLevel * 19 / 100)"
+                          height="9"
+                          rx="2"
+                          fill="@GetBatteryColor()"
+                          style="transition: width 0.35s ease;" />
+                    <rect x="24.8" y="4.2" width="2.2" height="5.6" rx="1.1"
+                          fill="rgba(255,255,255,0.55)" />
+
+                    @if (IsCharging)
+                    {
+                        <path d="M14 1.8
+                           c0-.6-.8-.9-1.2-.4
+                           L7.2 7.4
+                           c-.4.5 0 1.2.7 1.2
+                           h3.3
+                           l-.9 5.1
+                           c-.1.6.8.9 1.2.4
+                           l5.6-6.8
+                           c.4-.5 0-1.2-.7-1.2
+                           h-3.3
+                           z"
+                              fill="white"
+                              opacity="0.95" />
+                    }
+                </svg>
+            </div>
+
+            <div class="battery-percent">
+                @BatteryLevel 
+            </div>
+        </div>
+
+        <div class="sidebar-button" @onclick="() => EditTension(nameof(M0_HMI_TO_PLC_DTO), nameof(M0_HMI_TO_PLC_DTO.rMachineSpeedSP))">
+            <div>@Math.Round(ReadDTO.M0_PLC_TO_HMI_DTO.rMachineSpeedFeedback, 0)</div>
+            <div style="font-size: 0.8rem; font-weight: normal;">m/min</div>
+        </div>
+
+    </div>  
+    <div class="container">
+        <div class="alarms_bar">
+            <div class="alarms-list" id="alarmsList">
+                @if (Alarms.Any())
+                {
+                    @foreach (var alarm in Alarms)
+                    {
+                        <div class="alarm-item @(alarm.IsWarning ? "warning" : "error")">
+                            <div class="alarm-type @(alarm.IsWarning ? "warning" : "error")"><img src="@(alarm.IsWarning ? "resources/alert-triangle-white.png" : "resources/bell-white.png")" height="20" /> <p>@CultureResources.GetValue(alarm.AlarmType) </p></div> <p>@CultureResources.GetValue(alarm.Description)</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h4>No active alarms.</h4>
+                }
+            </div>
+            <div class="bell" @onclick="() => ViewAlarms()">
+                <div id="lottie-bell"></div>
+            </div>
+        </div>
+        <div class="modals">
+            @if (ActiveModuleComponent != null)
+            {
+                <div class="modal-container">
+                    <DynamicComponent Type="ActiveModuleComponent" Parameters="@(new Dictionary<string, object?>
+                    {
+                        { 
+                            "OnClose", EventCallback.Factory.Create(this, ComponentClosed) 
+                        }                                                             
+                    }
+                    )"/>                                                                                                                                            
+                </div>
+            }
+            @if (ActiveModuleComponent is null)
+            {
+                <div class="container_modals">
+                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M1_PLC_TO_HMI_DTO))">
+                        <div class="section_header" style="@GetStatusStyle("Ready")">
+                            <h4>Unwinder</h4>
+                            <h5>READY</h5>
+                        </div>
+                        <div class="image">
+                            <img src="resources/M1.jpg" width="100" height="90" />
+                        </div>
+                        <div class="tension_section">
+                            <h4>Tension</h4>
+                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M1_HMI_TO_PLC_DTO), nameof(M1_HMI_TO_PLC_DTO.rUnwTensionSP))">
+                                @Math.Round(ReadDTO.M1_PLC_TO_HMI_DTO.rUnwTensionPV, 1) Kg
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M2_PLC_TO_HMI_DTO))">
+                        <div class="section_header" style="@GetStatusStyle("Ready")">
+                            <h4>Primer</h4>
+                            <h5>READY</h5>
+                        </div>
+                        <div class="image">
+                            <img src="resources/M2.jpg" width="100" height="90" />
+                        </div>
+                        <div class="tension_section">
+                            <h4>Tension</h4>
+                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M2_HMI_TO_PLC_DTO), nameof(M2_HMI_TO_PLC_DTO.rModuleTensionSP))">
+                                @Math.Round(ReadDTO.M2_PLC_TO_HMI_DTO.rChillRollTensionPV, 1) Kg
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M4_PLC_TO_HMI_DTO))">
+                        <div class="section_header" style="@GetStatusStyle("Ready")">
+                            <h4>Print unit</h4>
+                            <h5>READY</h5>
+                        </div>
+                        <div class="image">
+                            <img src="resources/M4.jpg" width="100" height="90" />
+                        </div>
+                        <div class="tension_section">
+                            <h4>Tension</h4>
+                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M4_HMI_TO_PLC_DTO), nameof(M4_HMI_TO_PLC_DTO.rModuleTensionSP))">
+                                @Math.Round(ReadDTO.M4_PLC_TO_HMI_DTO.rModuleTensionFeedback, 1) Kg
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M5_PLC_TO_HMI_DTO))">
+                        <div class="section_header" style="@GetStatusStyle("Ready")">
+                            <h4>White</h4>
+                            <h5>READY</h5>
+                        </div>
+                        <div class="image">
+                            <img src="resources/M5.jpg" width="100" height="90" />
+                        </div>
+                        <div class="tension_section">
+                            <h4>Tension</h4>
+                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rModuleTensionSP))">
+                                @Math.Round(ReadDTO.M5_PLC_TO_HMI_DTO.rModuleTensionFeedback, 1) Kg
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M7_PLC_TO_HMI_DTO))">
+                        <div class="section_header" style="@GetStatusStyle("Ready")">
+                            <h4>Rewinder</h4>
+                            <h5>READY</h5>
+                        </div>
+                        <div class="image">
+                            <img src="resources/M7.jpg" width="100" height="90" />
+                        </div>
+                        <div class="tension_section">
+                            <h4>Tension</h4>
+                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M7_HMI_TO_PLC_DTO), nameof(M7_HMI_TO_PLC_DTO.rRewTensionSP))">
+                                @Math.Round(ReadDTO.M7_PLC_TO_HMI_DTO.rRewTensionPV, 1) Kg
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+        <Blazored.Toast.BlazoredToasts Timeout="10" ShowProgressBar="true" />
+        <WhiteFlexo.Components.Pages.AxPcFormatChangePopup OnConfirmed="HandleConfirmed" @ref="popup" />
+        @if (isEditingTension)
+        {
+            <div class="keypad-overlay" @onclick="CloseKeypad">
+                <div @onclick:stopPropagation="true">
+                    <Keypad Value="@valueToChange" MinValue="@minValue" MaxValue="@maxValue" OnSave="SaveValue" OnCancel="CancelEdit" />
+                </div>
+            </div>
+        }
+        @if (isCheckingAlarms)
+        {
+            <div class="alarms-overlay" @onclick="CloseAlarms">
+                <div @onclick:stopPropagation="true">
+                    <NotificationCenter Alarms="@Alarms" OnCloseAlarms="CloseAlarms" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (unhandledException != null)
+{
+    <div class="exception-overlay">
+        <div class="exception-box">
+            <h3>Application Error</h3>
+            <p>An unexpected error has occurred. Please contact support.</p>
+            <div class="exception-details">
+                <strong>@unhandledException.GetType().Name:</strong> @unhandledException.Message
+                <hr />
+                @unhandledException.StackTrace
+            </div>
+            <button style="margin-top: 1rem;" @onclick="DismissException">Dismiss</button>
+        </div>
+    </div>
+}
+
+@code {
+
+    private int BatteryLevel { get; set; } = 100;
+    private bool IsCharging { get; set; } = false;
+
+    private async Task UpdateBatteryStatus()
+    {
+        try
+        {
+            // Llamada al navegador para pedir datos del hardware
+            var stats = await JS.InvokeAsync<BatteryInfo>("getBatteryStatus");
+            if (stats != null)
+            {
+                BatteryLevel = (int)(stats.Level * 100);
+                IsCharging = stats.Charging;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Si el dispositivo no tiene batería (ej. un PC de sobremesa), esto evita que la app falle
+            Console.WriteLine("Lectura de batería no disponible: " + ex.Message);
+        }
+    }
+
+    public class BatteryInfo
+    {
+        public double Level { get; set; }
+        public bool Charging { get; set; }
+    }
+    private string GetBatteryColor()
+    {
+        if (IsCharging) return "mediumspringgreen";
+        return BatteryLevel switch
+        {
+            > 70 => "mediumspringgreen",
+            > 30 => "orange",
+            _ => "crimson"
+        };
+    }
+
+    private System.Threading.Timer? _renderTimer;
+    private bool _isDisposed = false;
+    private Exception? unhandledException;
+
+    public bool isCheckingAlarms = false;
+    private bool isEditingTension = false;
+    private float valueToChange;
+    private float minValue = 0.0f;
+    private float maxValue = 100.0f; // Example range, adjust as needed
+    private string? editingDto;
+    private bool lastOfssetDone = false; // Used to track if the last offset was done
+    private string? editingParameter;
+    private bool popupClosedManually = false;
+    private int? lastSelfCleanState = null;
+    private List<Alarm> Alarms = new();
+    private WhiteFlexo.Components.Pages.AxPcFormatChangePopup? popup;
+
+    private int? lastFlexoPosState = null; // Tracks the last known position state
+
+    protected override async Task OnInitializedAsync()
+    {
+        AppDomain.CurrentDomain.UnhandledException += HandleUnhandledException;
+        opcUaClient.ConnectionStatusChanged += OnConnectionStatusChanged;
+        ReadDTO.AlarmUpdated += OnAlarmReceived;
+
+        _renderTimer = new Timer(async _ =>
+        {
+            if (_isDisposed) return;
+
+            await InvokeAsync(async () =>
+            {
+                CheckForSelfCleanStateChange();
+                CheckForFlexoPosStateChange();
+                await UpdateBatteryStatus();
+                StateHasChanged();
+            });
+        }, null, 0, 1000); 
+
+        await base.OnInitializedAsync();
+    }
+
+    private void OnConnectionStatusChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+    public void Dispose()
+    {
+        opcUaClient.ConnectionStatusChanged -= OnConnectionStatusChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // 1. Inicializar batería
+            await UpdateBatteryStatus();
+
+            // 2. Inicializar Scroll horizontal de alarmas
+            await JS.InvokeVoidAsync("enableHorizontalScroll", "alarmsList");
+
+            // 3. Inicializar animaciones Lottie
+            await JS.InvokeVoidAsync("loadLottieAnimation", "lottie-bell");
+        }
+    }
+    /// <summary>
+    /// Checks if the Flexo Position State has changed and shows a toast notification accordingly.
+    /// </summary>
+    private void CheckForFlexoPosStateChange()
+    {
+        int currentState = ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoPosState;
+
+        // Only proceed if the state has actually changed since our last check
+        if (lastFlexoPosState != currentState)
+        {
+            // Acknowledge the change and show the appropriate toast
+            switch (currentState)
+            {
+                case 2: // Home
+                    ToastService.ShowSuccess("Position reached: Home");
+                    break;
+                case 3: // Pre Print
+                    ToastService.ShowSuccess("Position reached: Pre Print");
+                    break;
+                case 4: // Print
+                    ToastService.ShowSuccess("Position reached: Print");
+                    break;
+                case 5: // Sleeve Change
+                    ToastService.ShowSuccess("Position reached: Sleeve Change");
+                    break;
+                case 6: // Moving
+                    ToastService.ShowInfo("Movement in progress...");
+                    break;
+            }
+
+            // IMPORTANT: Update the last known state to prevent repeated notifications
+            lastFlexoPosState = currentState;
+        }
+    }
+
+    private void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+        // This event can be raised from any thread.
+        // We must use InvokeAsync to safely update the UI.
+        InvokeAsync(() =>
+        {
+            unhandledException = (Exception)e.ExceptionObject;
+            StateHasChanged();
+        });
+    }
+
+    private void DismissException()
+    {
+        unhandledException = null;
+    }
+
+    private void CheckForSelfCleanStateChange()
+    {
+        int currentState = ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoSelfCleanState;
+        if (lastSelfCleanState != currentState)
+        {
+            if (currentState == 6 && !popupClosedManually)
+            {
+                popup?.Show();
+            }
+
+            if (currentState != 6)
+            {
+                popupClosedManually = false;
+            }
+            lastSelfCleanState = currentState;
+        }
+
+        bool currentOfssetDone = ReadDTO.M5_HMI_TO_PLC_DTO.bOffsetDone;
+        if (lastOfssetDone != currentOfssetDone)
+        {
+            if (currentOfssetDone)
+            {
+                ToastService.ShowSuccess("Offset done successfully.");
+            }
+            lastOfssetDone = currentOfssetDone;
+        }
+    }
+
+    private void HandleConfirmed()
+    {
+        popupClosedManually = true;
+    }
+
+    private void ComponentClosed()
+    {
+        SetActiveModule("none");
+    }
+
+    private void CloseKeypad()
+    {
+        isEditingTension = false;
+    }
+
+    private void ViewAlarms()
+    {
+        isCheckingAlarms = true;
+    }
+
+    private void CloseAlarms()
+    {
+        isCheckingAlarms = false;
+    }
+
+    private void EditTension(string dto, string parameter)
+    {
+        try
+        {
+            editingDto = dto;
+            editingParameter = parameter;
+            var param = opcUaClient.ReadFromPlc(dto + "." + parameter);
+            if (param != null) valueToChange = Convert.ToSingle(param);
+            SetMinMax(dto, parameter);
+            isEditingTension = true;
+        }
+        catch (Exception ex)
+        {
+            unhandledException = ex;
+        }
+    }
+    private void SetMinMax(string dto, string paramName)
+    {
+        minValue = 0.0f; // Default min value
+        maxValue = 100.0f; // Default max value
+        switch (dto)
+        {
+            case nameof(M0_HMI_TO_PLC_DTO):
+                ReadDTO.M0_HMI_TO_PLC_DTO.SetMinMaxValues(paramName, out minValue, out maxValue);
+                break;
+            case nameof(M1_HMI_TO_PLC_DTO):
+                ReadDTO.M1_HMI_TO_PLC_DTO.SetMinMaxValues(paramName, out minValue, out maxValue);
+                break;
+            case nameof(M2_HMI_TO_PLC_DTO):
+                ReadDTO.M2_HMI_TO_PLC_DTO.SetMinMaxValues(paramName, out minValue, out maxValue);
+                break;
+            case nameof(M4_HMI_TO_PLC_DTO):
+                ReadDTO.M4_HMI_TO_PLC_DTO.SetMinMaxValues(paramName, ref minValue, ref maxValue);
+                break;
+            case nameof(M5_HMI_TO_PLC_DTO):
+                ReadDTO.M5_HMI_TO_PLC_DTO.SetMinMaxValues(paramName, out minValue, out maxValue);
+                break;
+            case nameof(M7_HMI_TO_PLC_DTO):
+                ReadDTO.M7_HMI_TO_PLC_DTO.SetMinMaxValues(paramName, out minValue, out maxValue);
+                break;
+            default:
+                break;
+        }
+    }
+    private void SaveValue(object value)
+    {
+        try
+        {
+            if (editingDto != null && editingParameter != null)
+            {
+                opcUaClient.WriteToPlc(editingDto + "." + editingParameter, value);
+            }
+            isEditingTension = false;
+        }
+        catch (Exception ex)
+        {
+            unhandledException = ex;
+        }
+    }
+
+    private void CancelEdit()
+    {
+        isEditingTension = false;
+    }
+
+    private async void OnAlarmReceived(object? sender, Tuple<Alarm, bool> alarm)
+    {
+        await InvokeAsync(async () =>
+        {
+            if (_isDisposed) return;
+
+            bool listChanged = false;
+            if (alarm.Item2)
+            {
+                // if (Alarms.All(a => a.AlarmName != alarm.Item1.AlarmName))
+                // {
+                Alarms.Add(alarm.Item1);
+                listChanged = true;
+                // }
+            }
+            else
+            {
+                var existingAlarm = Alarms.FirstOrDefault(a => a.AlarmName == alarm.Item1.AlarmName);
+                if (existingAlarm != null)
+                {
+                    Alarms.Remove(existingAlarm);
+                    listChanged = true;
+                }
+            }
+
+            if (listChanged)
+            {
+                try
+                {
+                    if (Alarms.Any()) await JS.InvokeVoidAsync("playLottieAnimation", "lottie-bell");
+                    else await JS.InvokeVoidAsync("resetLottieAnimation", "lottie-bell");
+                }
+                catch (Exception ex)
+                {
+                    unhandledException = ex;
+                }
+            }
+        });
+    }
+
+    private string? activeModule = null;
+
+    private void SetActiveModule(string moduleName)
+    {
+        if (isEditingTension) return;
+
+        activeModule = (activeModule == moduleName) ? null : moduleName;
+    }
+
+    private Type? ActiveModuleComponent => activeModule switch
+    {
+        nameof(ReadDTO.M1_PLC_TO_HMI_DTO) => typeof(WhiteFlexo.Components.Pages.UnwinderView),
+        nameof(ReadDTO.M2_PLC_TO_HMI_DTO) => typeof(WhiteFlexo.Components.Pages.PrimerView),
+        nameof(ReadDTO.M4_PLC_TO_HMI_DTO) => typeof(WhiteFlexo.Components.Pages.PrintUnitBarsView),
+        nameof(ReadDTO.M5_PLC_TO_HMI_DTO) => typeof(WhiteFlexo.Components.Pages.WhiteFlexoView),
+        nameof(ReadDTO.M7_PLC_TO_HMI_DTO) => typeof(WhiteFlexo.Components.Pages.RewinderView),
+        _ => null
+    };
+
+    private string GetModuleStyle(string status)
+    {
+        return status switch
+        {
+            "Ready" => "border: 3px solid #039855;",
+            "Not Ready" => "border: 3px solid #DC6803;",
+            "Emergency" => "border: 3px solid #D30D3A; background: #ffcccc;",
+            _ => "border: 3px solid #039855;"
+        };
+    }
+
+    private string GetStatusStyle(string status)
+    {
+        return status switch
+        {
+            "Ready" => "border: 3px solid #039855; background: #039855",
+            "Not Ready" => "border: 3px solid #DC6803; background: #DC6803",
+            "Emergency" => "border: 3px solid #D30D3A; background: #D30D3A;",
+            _ => "border: 3px solid #039855; background: #039855"
+        };
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_isDisposed) return;
+        _isDisposed = true;
+
+        ReadDTO.AlarmUpdated -= OnAlarmReceived;
+        AppDomain.CurrentDomain.UnhandledException -= HandleUnhandledException;
+
+        if (_renderTimer != null)
+        {
+            await _renderTimer.DisposeAsync();
+        }
+    }
+}
