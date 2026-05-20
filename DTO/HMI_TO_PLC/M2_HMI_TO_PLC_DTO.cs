@@ -29,6 +29,7 @@
         public uint udiCleaningFillWaterTimeSP { get; set; }
         public uint udiSleeveChangeTimeSP { get; set; }
         public short iCleaningCyclesSP { get; set; }
+        public bool bSlowRotationEnable { get; set; }
 
         public void SetMinMaxValues(string name, out float MinValuePopup, out float MaxValuePopup)
         {
