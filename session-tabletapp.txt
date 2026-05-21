@@ -1,7 +1,0 @@
-Session ID: ses_1bb31ece9ffecNQoLKWlt22w0s
-Created: Thu May 21 2026
-Description: Tablet Ia - configuración de navegación iOS, Slow Rotation state y commits
-
-Para reabrir esta conversación:
-  opencode
-Luego en el TUI pulsa Ctrl+P para ver el historial de sesiones y selecciona esta.
