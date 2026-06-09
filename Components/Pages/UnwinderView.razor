@@ -356,7 +356,7 @@
                     </div>
                     <div class="config_parameter">
                         <h4>Diameter</h4>
-                        <ul>@Math.Round(ReadDTO.M1_PLC_TO_HMI_DTO.rUnwDiameterPV, 1) mm</ul>
+                        <ul class="readonly-value">@Math.Round(ReadDTO.M1_PLC_TO_HMI_DTO.rUnwDiameterPV, 1) mm</ul>
                     </div>
                     <div class="config_parameter">
                         <h4>Material width</h4>
@@ -383,7 +383,7 @@
                     </div>
                     <div class="config_parameter">
                         <h4>Dancer</h4>
-                        <ul>@ReadDTO.M1_PLC_TO_HMI_DTO.iDancerActualPercentage %</ul>
+                        <ul class="readonly-value">@ReadDTO.M1_PLC_TO_HMI_DTO.iDancerActualPercentage %</ul>
                     </div>
                 </div>
             </div>
@@ -391,11 +391,11 @@
                 <div class="navigation-buttons">
                     <div class="config_parameter">
                         <h4>Splice detector</h4>
-                        <ul>@(ReadDTO.M1_PLC_TO_HMI_DTO.bSpliceDetectorOk ? "OK" : "Not OK")</ul>
+                        <ul class="readonly-value">@(ReadDTO.M1_PLC_TO_HMI_DTO.bSpliceDetectorOk ? "OK" : "Not OK")</ul>
                     </div>
                     <div class="config_parameter">
                         <h4>Splice in progress</h4>
-                        <ul>@(ReadDTO.M1_PLC_TO_HMI_DTO.bSpliceInProgress ? "Yes" : "No")</ul>
+                        <ul class="readonly-value">@(ReadDTO.M1_PLC_TO_HMI_DTO.bSpliceInProgress ? "Yes" : "No")</ul>
                     </div>
                 </div>
                 <div class="navigation-buttons">
@@ -407,7 +407,7 @@
                     {
                         <div class="config_parameter">
                             <h4>Dancer status</h4>
-                            <ul>Calibrated</ul>
+                            <ul class="readonly-value">Calibrated</ul>
                         </div>
                     }
                 </div>

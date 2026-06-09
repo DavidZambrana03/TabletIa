@@ -362,7 +362,7 @@
                     </div>
                     <div class="config_parameter">
                         <h4>Diameter</h4>
-                        <ul>@Math.Round(ReadDTO.M7_PLC_TO_HMI_DTO.rRewDiameterPV, 1) mm</ul>
+                        <ul class="readonly-value">@Math.Round(ReadDTO.M7_PLC_TO_HMI_DTO.rRewDiameterPV, 1) mm</ul>
                     </div>
                     <div class="config_parameter">
                         <h4>Lay-on pressure</h4>
@@ -383,11 +383,11 @@
                 <div class="config_parameters_container">
                     <div class="config_parameter">
                         <h4>Dancer</h4>
-                        <ul>@ReadDTO.M7_PLC_TO_HMI_DTO.iRewDancerPercentage %</ul>
+                        <ul class="readonly-value">@ReadDTO.M7_PLC_TO_HMI_DTO.iRewDancerPercentage %</ul>
                     </div>
                     <div class="config_parameter">
                         <h4>Dancer status</h4>
-                        <ul>
+                        <ul class="readonly-value">
                             @if (ReadDTO.M7_PLC_TO_HMI_DTO.bRewDancerCalibrated)
                             {
                                 <span>Calibrated</span>

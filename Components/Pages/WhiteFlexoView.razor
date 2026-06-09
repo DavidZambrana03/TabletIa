@@ -825,13 +825,11 @@
                 <div class="config_parameters_container">
                     <div class="config_parameter">
                         <h4>Actual format</h4>
-                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.rFlexoActualFormat</ul>
+                        <ul class="readonly-value">@ReadDTO.M5_PLC_TO_HMI_DTO.rFlexoActualFormat</ul>
                     </div>
                     <div class="config_parameter">
-                        <h4>Mark Sensor</h4>
-                        <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rMarkSensorPositionSetpoint))">
-                            @(ReadDTO.M5_PLC_TO_HMI_DTO.rMarkSensorPositionFeedback)
-                        </ul>
+                        <h4>Register error</h4>
+                        <ul class="readonly-value">@ReadDTO.M5_PLC_TO_HMI_DTO.rActualRegisterError</ul>
                     </div>
                     <div class="config_parameter">
                         <h4>Longitudinal Offset</h4>
@@ -846,8 +844,10 @@
                         </ul>
                     </div>
                     <div class="config_parameter">
-                        <h4>Register error</h4>
-                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.rActualRegisterError</ul>
+                        <h4>Mark Sensor</h4>
+                        <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rMarkSensorPositionSetpoint))">
+                            @(ReadDTO.M5_PLC_TO_HMI_DTO.rMarkSensorPositionFeedback)
+                        </ul>
                     </div>
                 </div>
             </div>
