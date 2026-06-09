@@ -428,6 +428,14 @@
         opacity: 0.5;
     }
 
+    /* Safety: while a module is open, the OTHER (dimmed) cards must not let you edit
+       their tension. pointer-events:none on the input means a tap there falls through
+       to the card itself (switches module) instead of opening the edit keypad — so
+       you can never change another module's tension by mistake. */
+    .module.dimmed .card-tension ul {
+        pointer-events: none;
+    }
+
     /* Tension field on the cards spans the full card width (minus the section's
        side padding), in both the minimized and expanded states. */
     .module .card-tension ul {
@@ -619,10 +627,60 @@
        .selectable-image and must keep their size, so they're excluded. */
     .module_big.embedded .left-container img:not(.selectable-image),
     .module_big.embedded .padding_section img:not(.selectable-image) {
-        max-height: 78px !important;
+        max-height: 88px !important;
         width: auto !important;
         height: auto;
         object-fit: contain;
+    }
+
+    /* ---- Fit + tidy: make parameter inputs fill their column (no empty gap on the
+       right) and keep the Primer short enough to fit the tablet without scrolling. */
+    .module_big.embedded .config_parameters_container {
+        width: 100% !important;
+        gap: 10px 16px !important;
+        margin-top: 0.3rem !important;
+    }
+    .module_big.embedded .config_parameter,
+    .module_big.embedded .config_parameter ul {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .module_big.embedded .config_parameter {
+        min-height: 0 !important;
+    }
+
+    /* "side" hint: compact, sits right under the input (Transmission / Operator) */
+    .module_big.embedded .side-indicator {
+        width: auto !important;
+        margin: 0 !important;
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+        color: #737373 !important;
+    }
+
+    /* White > Ink: the pressure view was fixed 600px + a 300px image and clipped the
+       right "Pressure". Fill the column with two flexible inputs and a roller in the
+       middle, all centered vertically (input · image · input). */
+    .module_big.embedded .pressure-view {
+        width: 100% !important;
+        gap: 12px !important;
+        justify-content: space-between;
+        align-items: center !important;
+        flex-grow: 1 !important;   /* take the space under the warning so it centers */
+    }
+    .module_big.embedded .pressure-view > .tension_section {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        min-width: 0;
+    }
+    .module_big.embedded .pressure-view > .tension_section ul,
+    .module_big.embedded .pressure-view > .tension_section h4 {
+        width: 100% !important;
+    }
+    .module_big.embedded .pressure-view > img {
+        flex: 0 0 auto;
+        width: 150px !important;
+        max-height: 90px;
     }
 </style>
 
