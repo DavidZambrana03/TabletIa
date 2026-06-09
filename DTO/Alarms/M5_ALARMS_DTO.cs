@@ -30,8 +30,8 @@ namespace WhiteFlexo
         public bool bM5ChillRollMotorDriveAlarm { get; set; }
         public bool bOutfeedMotorDriveAlarm { get; set; }
         public bool bSpeedMatchMotorDriveAlarm { get; set; }
-        public bool [] bPrintBarMotorDriveAlarm { get; set; }
-        public bool [] bCrossBeamMotorDriveAlarm { get; set; }
+        public bool[] bPrintBarMotorDriveAlarm { get; set; }
+        public bool[] bCrossBeamMotorDriveAlarm { get; set; }
         public bool bMarkSensorMotorDriveAlarm { get; set; }
     }
 

@@ -42,7 +42,7 @@ namespace WhiteFlexo
 
         public bool bStartPosOptical { get; set; }
         public float rOpticalSensorPosSP { get; set; }
-
+        public bool bEnableAutomaticRegister { get; set; }
         public short iPreImpulsionFanSP_1 { get; set; }
         public short iPreExhaustFanSP_1 { get; set; }
         public short iProdImpulsionFanSP_1 { get; set; }
@@ -74,7 +74,7 @@ namespace WhiteFlexo
         public bool bManualAdjust { get; set; }
         public bool bStartMarkSensor { get; set; }
         public bool bEnableSmartPrint { get; set; }
-        public bool bAxPcSelector { get; set; } 
+        public bool bAxPcSelector { get; set; }
         public bool bMoveFwdLeft { get; set; }
         public bool bMoveFwdRight { get; set; }
         public bool bMoveRevLeft { get; set; }

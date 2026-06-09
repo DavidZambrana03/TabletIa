@@ -11,7 +11,7 @@ namespace WhiteFlexo
         public short[] iPbState { get; set; }
         public short[] iCbState { get; set; }
         public float[] rPcTorques { get; set; } = new float[2];
-        public float[] rAxTorques { get; set; } =new float[2];
+        public float[] rAxTorques { get; set; } = new float[2];
         public float rModuleTensionFeedback { get; set; }
         public bool bOvenGateClosed { get; set; }
         public bool bSmartPrintEnabled { get; set; }
@@ -19,6 +19,8 @@ namespace WhiteFlexo
         public float rProdTempOvenPv { get; set; }
         public bool bDrumTempControlInOp { get; set; }
         public float rDrumTempControlPV { get; set; }
+        public float rActualRegisterError { get; set; }
+        public bool bAutomaticRegisterEnabled { get; set; }
         //public float rOpticalSensorPosPV { get; set; }
         public short iPreImpulsionFanPV_1 { get; set; }
         public short iCleanSequenceTimeLeft { get; set; }
@@ -43,9 +45,9 @@ namespace WhiteFlexo
         public float rDrBladePressureCs { get; set; }
         public float rPcPos_MS { get; set; }
         public bool bWhiteFlexoStarted { get; set; }
-        public ushort uiLvlWhiteTank { get; set; }
-        public ushort uiLvlWaterTank { get; set; }
-        public ushort uiLvlWasteTank { get; set; }
+        public short iFlexoInkTankLvl { get; set; }
+        public short iFlexoWaterTankLvl { get; set; }
+        public short iFlexoWasteTankLvl { get; set; }
 
         //public float rDancerTensionFeedback { get; set; }
     }

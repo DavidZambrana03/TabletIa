@@ -820,56 +820,56 @@
 
     @if (selectedMode == "Adjust")
     {
-        <div class="padding_section">
-            <div class="side-by-side">
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                   
-                    <div class="side-by-side" style="align-items: center;">
-                        <div class="config_parameter">
-                            <h4>Actual format</h4>
-                            <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.rFlexoActualFormat</ul>
-                        </div>
-                    </div><div class="side-by-side" style="align-items: center;">
-                        <div class="config_parameter">
-                            <h4>Mark Sensor</h4>
-                            <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rMarkSensorPositionSetpoint))">
-                                @(ReadDTO.M5_PLC_TO_HMI_DTO.rMarkSensorPositionFeedback)
-                            </ul>
-                        </div>
+        <div class="main_view">
+            <div class="left-container">
+                <div class="config_parameters_container">
+                    <div class="config_parameter">
+                        <h4>Actual format</h4>
+                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.rFlexoActualFormat</ul>
                     </div>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div class="side-by-side" style="align-items: center;">
-                        <div class="config_parameter">
-                            <h4>Longitudinal Offset</h4>
-                            <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingOffset))">
-                                @(ReadDTO.M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingOffset) mm
-                            </ul>
-                        </div>
-                        <div class="config_parameter" style="justify-content: center; align-items: center;">
-                            <button class="button start-button" hidden="@(!(LateralOffsetEdited || OffsetEdited))" @onclick="SetPlateCylinderOffsets">Set offset</button>
-                        </div>
+                    <div class="config_parameter">
+                        <h4>Mark Sensor</h4>
+                        <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rMarkSensorPositionSetpoint))">
+                            @(ReadDTO.M5_PLC_TO_HMI_DTO.rMarkSensorPositionFeedback)
+                        </ul>
                     </div>
-                    <div class="side-by-side" style="align-items: center;">
-                        <div class="config_parameter">
-                            <h4> Lateral Offset</h4>
-                            <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingLateralOffset))">
-                                @(ReadDTO.M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingLateralOffset) mm
-                            </ul>
-                        </div>
+                    <div class="config_parameter">
+                        <h4>Longitudinal Offset</h4>
+                        <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingOffset))">
+                            @(ReadDTO.M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingOffset) mm
+                        </ul>
                     </div>
-
+                    <div class="config_parameter">
+                        <h4>Lateral Offset</h4>
+                        <ul @onclick="() => ChangeParameter(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingLateralOffset))">
+                            @(ReadDTO.M5_HMI_TO_PLC_DTO.rPlateCylinderPrintingLateralOffset) mm
+                        </ul>
+                    </div>
+                    <div class="config_parameter">
+                        <h4>Register error</h4>
+                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.rActualRegisterError</ul>
+                    </div>
                 </div>
             </div>
-            <div class="settings" style="justify-content: center;">
+            <div class="right-container">
+                <div class="navigation-buttons">
+                    <button class="button start-button" hidden="@(!(LateralOffsetEdited || OffsetEdited))" @onclick="SetPlateCylinderOffsets">Set offset</button>
+                    <button class="button"
+                            style="@(ReadDTO.M5_PLC_TO_HMI_DTO.bAutomaticRegisterEnabled ? "background-color: #039855; color: white; border-color: #039855;" : "")"
+                            @onclick="SetRegister">
+                        Enable Register
+                    </button>
+                </div>
                 <div class="settings-group">
                     <h4>Contrast</h4>
-                    <TouchButton class="button" OnUserPointerDown='() => HandleJogPress("TEACH")'
-                                 OnUserPointerUp='() => HandleJogRelease("TEACH")'
-                                 OnUserPointerLeave='() => HandleJogRelease("TEACH")'>Teach</TouchButton>
-                    <TouchButton class="button" OnUserPointerDown='() => HandleJogPress("WINDOW")'
-                                 OnUserPointerUp='() => HandleJogRelease("WINDOW")'
-                                 OnUserPointerLeave='() => HandleJogRelease("WINDOW")'>Window</TouchButton>
+                    <div class="navigation-buttons">
+                        <TouchButton class="button" OnUserPointerDown='() => HandleJogPress("TEACH")'
+                                     OnUserPointerUp='() => HandleJogRelease("TEACH")'
+                                     OnUserPointerLeave='() => HandleJogRelease("TEACH")'>Teach</TouchButton>
+                        <TouchButton class="button" OnUserPointerDown='() => HandleJogPress("WINDOW")'
+                                     OnUserPointerUp='() => HandleJogRelease("WINDOW")'
+                                     OnUserPointerLeave='() => HandleJogRelease("WINDOW")'>Window</TouchButton>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1127,28 +1127,28 @@
                     <div class="border-fill">
                         <ul>Waste</ul>
                         <div class="fill-container">
-                            <div class="fill waste-fill" style="height: @ReadDTO.M5_PLC_TO_HMI_DTO.uiLvlWasteTank%;">
+                            <div class="fill waste-fill" style="height: @ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoWasteTankLvl%;">
                             </div>
                         </div>
-                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.uiLvlWasteTank %</ul>
+                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoWasteTankLvl %</ul>
                     </div>
 
                     <div class="border-fill">
                         <ul>Water</ul>
                         <div class="fill-container">
-                            <div class="fill water-fill" style="height: @ReadDTO.M5_PLC_TO_HMI_DTO.uiLvlWaterTank%;">
+                            <div class="fill water-fill" style="height: @ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoWaterTankLvl%;">
                             </div>
                         </div>
-                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.uiLvlWaterTank %</ul>
+                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoWaterTankLvl %</ul>
                     </div>
 
                     <div class="border-fill">
                         <ul>White</ul>
                         <div class="fill-container">
-                            <div class="fill white-fill" style="height: @ReadDTO.M5_PLC_TO_HMI_DTO.uiLvlWhiteTank%;">
+                            <div class="fill white-fill" style="height: @ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoInkTankLvl%;">
                             </div>
                         </div>
-                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.uiLvlWhiteTank %</ul>
+                        <ul>@ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoInkTankLvl %</ul>
                     </div>
                 </div>
             </div>
@@ -1407,6 +1407,18 @@
     void SetPlateCylinderLateralOffset()
     {
         opcUaClient.WriteToPlc(nameof(M5_HMI_TO_PLC_DTO) + "." + nameof(M5_HMI_TO_PLC_DTO.bSetPlateCylinderLateralPrintingOffset), true);
+    }
+
+    void SetRegister()
+    {
+        try
+        {
+            opcUaClient.WriteToPlc(nameof(M5_HMI_TO_PLC_DTO) + "." + nameof(M5_HMI_TO_PLC_DTO.bEnableAutomaticRegister), true);
+        }
+        catch (Exception ex)
+        {
+            serilog.Error($"Error enabling automatic register: {ex.Message}");
+        }
     }
 
     void GoToMovements(int type)
