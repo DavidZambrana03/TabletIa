@@ -1,6 +1,30 @@
 ﻿/*#if (SampleContent)*/
+/* Inter, bundled locally (variable font) so it renders offline on the tablet.
+   One file covers every weight 100–900 via the font-weight range. */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../fonts/Inter-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../fonts/Inter-Italic-Variable.ttf') format('truetype');
+}
+
 html, body {
-    font-family: Inter
+    font-family: 'Inter', sans-serif;
+}
+
+/* Form controls (button/input/select/textarea) don't inherit font-family by
+   default — force them to Inter so every piece of text in the app uses it. */
+button, input, select, textarea {
+    font-family: inherit;
 }
 
 a, .btn-link {

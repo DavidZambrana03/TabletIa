@@ -327,7 +327,7 @@
     }
 </style>
 
-<div class="module_big" style="@GetModuleStyle(ModuleStatus)">
+<div class="module_big @(Embedded ? "embedded" : "")" style="@GetModuleStyle(ModuleStatus)">
     <div class="section_header" style="@GetStatusStyle(ModuleStatus)">
         <div class="ios-nav">
             <button class="ios-nav-left" @onclick="Close">
@@ -534,6 +534,7 @@
     Serilog.ILogger serilog = Serilog.Log.ForContext<RewinderView>();
 
     [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public bool Embedded { get; set; }
 
     private string selectedMode = "Rewinder";
 

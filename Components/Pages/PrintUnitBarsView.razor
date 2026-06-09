@@ -370,7 +370,7 @@
     }
 </style>
 
-<div class="module_big" style="border: 3px solid #039855;">
+<div class="module_big @(Embedded ? "embedded" : "")" style="border: 3px solid #039855;">
     <div class="section_header" style="border: 3px solid #039855; background: #039855">
         <div class="ios-nav">
             <button class="ios-nav-left" @onclick="Close">
@@ -455,6 +455,7 @@
 
 @code {
     [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public bool Embedded { get; set; }
 
     private List<PrintUnitModel> PrintUnits = new()
     {

@@ -117,14 +117,23 @@
         box-sizing: border-box; /* Include padding and borders in element's size */
     }
 
-    .tension_section {
-        font-family: Arial, sans-serif;
+    /* Card tension block. Renamed from .tension_section to avoid colliding with the
+       views' own global .tension_section rules (e.g. WhiteFlexoView sets width:100px),
+       which were shrinking the card input when those modules were opened. */
+    .card-tension {
+        font-family: Inter;
         font-size: 20px;
         padding: 20px;
         width: 100%;
+        box-sizing: border-box;
     }
 
-        .tension_section ul {
+        .card-tension h4 {
+            margin: 0 0 8px 0;
+            color: #141414;
+        }
+
+        .card-tension ul {
             box-sizing: border-box;
             display: flex;
             flex-direction: row;
@@ -231,7 +240,7 @@
         white-space: pre-wrap;
         word-wrap: break-word;
         flex-grow: 1;
-        font-family: monospace;
+        font-family: 'Inter', sans-serif;
         font-size: 0.875rem;
     }
 
@@ -344,6 +353,277 @@
             order: 1;
             flex-grow: 0;
         }
+
+    /* ---- Inline module-detail layout (mirrors MachineManagementView from the main WPF app) ---- */
+    /* Fill the full sidebar height: .container was 90vh which left a ~10vh blank
+       strip at the bottom. Now alarms_bar (fixed) + modals (flex:1) span 100vh. */
+    .container {
+        height: 100vh;
+    }
+    .modals {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    .modals .container_modals {
+        width: 100%;
+        height: auto;
+        flex: 1 1 auto;
+        box-sizing: border-box;
+        transition: height 0.3s ease, padding 0.3s ease, gap 0.3s ease, flex 0.3s ease;
+    }
+
+    .modals.detail-open .container_modals {
+        flex: 0 0 auto;
+        height: 16vh;
+        min-height: 150px;
+        max-height: 170px;
+        padding: 10px 16px 0 16px;
+        gap: 10px;
+        overflow: visible; /* let the selected card's patch overlap onto the panel */
+    }
+
+    .module {
+        flex: 1 1 0;
+        min-width: 0;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, border-width 0.15s ease;
+    }
+
+    /* Selected card fuses with the panel below into one continuous "L"/flag shape.
+       Same border thickness (3px) as every other card and the panel — only the
+       bottom edge is dropped, and an ::after patch (same fill as the card) covers
+       the panel's top border just under this card, so the join is seamless while
+       the panel stays closed under the other cards. */
+    .module.selected {
+        border-bottom: none !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        box-shadow: none;
+        height: 100%;
+        position: relative;
+        z-index: 3;
+    }
+    /* Bridge: crosses the 6px gap to the panel and covers the panel's top border
+       just under this card. Side borders use --sc (the card's state colour) so the
+       card's edges continue down into the panel — forming the closed "L". */
+    .module.selected::after {
+        content: "";
+        position: absolute;
+        left: -3px;
+        right: -3px;
+        bottom: -9px;            /* 6px gap + 3px panel top border */
+        height: 12px;
+        background: inherit;     /* same fill as the card (white / pink) */
+        border-left: 3px solid var(--sc);
+        border-right: 3px solid var(--sc);
+        box-sizing: border-box;
+        z-index: 4;
+    }
+
+    .module.dimmed {
+        opacity: 0.5;
+    }
+
+    /* Tension field on the cards spans the full card width (minus the section's
+       side padding), in both the minimized and expanded states. */
+    .module .card-tension ul {
+        width: 100% !important;
+        height: 44px;
+    }
+
+    /* Every direct child of a card must respect the card's width — without
+       border-box the 20px padding on .tension_section added to its 100% width and
+       blew past the card on narrower columns (centre modules with detail open).
+       Stretch them too so they fill the column instead of shrinking to content. */
+    .module > * {
+        box-sizing: border-box;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Compact card content while a module is open below. */
+    .modals.detail-open .module {
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+    .modals.detail-open .module.selected {
+        overflow: visible; /* allow the ::after patch to spill onto the panel */
+    }
+    .modals.detail-open .module .image {
+        margin: 0;
+        padding: 2px 0;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modals.detail-open .module .image img {
+        width: 48px !important;
+        height: 36px !important;
+        object-fit: contain;
+    }
+
+    /* Photo in the big (nothing-selected) view; clean iOS-style line icon when a
+       module is open and the cards shrink. */
+    .module-icon { display: none; }
+    .modals.detail-open .module .image img { display: none; }
+    .modals.detail-open .module .module-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modals.detail-open .module .module-icon svg {
+        width: 38px;
+        height: 38px;
+        color: #141414;
+    }
+    .modals.detail-open .module .section_header {
+        height: 28px;
+        padding: 4px 12px;
+    }
+    .modals.detail-open .module .section_header h4,
+    .modals.detail-open .module .section_header h5 {
+        font-size: 12px;
+        margin: 0;
+        line-height: 1.1;
+    }
+    .modals.detail-open .module .card-tension {
+        padding: 2px 12px 6px 12px;
+    }
+    .modals.detail-open .module .card-tension h4 {
+        font-size: 11px;
+        margin: 1px 0;
+    }
+    .modals.detail-open .module .card-tension ul {
+        height: 30px;
+        font-size: 13px;
+        padding: 4px 10px;
+        width: 100% !important;
+    }
+
+    /* The detail panel that opens below the row.
+       overflow: hidden because the tablet target is a 12.7" Lenovo Tab P12 and we
+       deliberately don't want vertical scrollbars inside a module. The embedded
+       view itself must fit — the compression rules below help with that. */
+    .module-detail {
+        flex: 1 1 auto;
+        margin: 6px 16px 12px 16px;  /* 6px top gap: cards read as independent blocks */
+        overflow: hidden;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        animation: detail-fade-in 0.25s ease;
+    }
+    .module-detail > * {
+        flex: 1;
+        width: 100%;
+        min-height: 0;
+    }
+    @@keyframes detail-fade-in {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- Embedded view: fill the panel, no internal scroll ---- */
+    .module_big.embedded {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 0 12px 12px; /* square top: the selected card's patch joins here, rest stays closed */
+        overflow: hidden;
+        box-sizing: border-box;
+        align-items: stretch !important;
+    }
+
+    /* The iOS-nav header is redundant when the row of cards is shown above. */
+    .module_big.embedded .section_header {
+        display: none;
+    }
+
+    /* Tighter chrome: tabs / inner views compress so content fits without scroll
+       on the target tablet viewport (12.7" P12 ≈ 1472x920 CSS px in landscape). */
+    .module_big.embedded .segmented-control {
+        margin: 6px 12px !important;
+        flex: 0 0 auto;
+    }
+    .module_big.embedded .segmented-control button {
+        padding: 6px 18px !important;
+    }
+
+    .module_big.embedded .main_view {
+        margin: 8px !important;
+        gap: 10px !important;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .module_big.embedded .padding_section {
+        padding: 10px 14px !important;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .module_big.embedded .left-container,
+    .module_big.embedded .right-container {
+        padding: 12px !important;
+        gap: 12px !important;
+        overflow: hidden;
+    }
+    .module_big.embedded .right-container {
+        gap: 18px !important;
+    }
+
+    .module_big.embedded .config_parameters_container {
+        margin-top: 0.4rem !important;
+        gap: 0.7rem !important;
+    }
+
+    .module_big.embedded .config_parameter {
+        height: auto !important;
+        min-height: 60px;
+        width: 100% !important;
+        gap: 4px !important;
+    }
+    .module_big.embedded .config_parameter h4 {
+        width: auto !important;
+        height: auto !important;
+        font-size: 14px !important;
+        line-height: 17px;
+        margin: 0;
+    }
+    .module_big.embedded .config_parameter ul {
+        width: 100% !important;
+        height: 38px !important;
+        font-size: 15px !important;
+        padding: 6px 10px !important;
+    }
+
+    /* Tension/pressure inputs share the same look as config_parameter */
+    .module_big.embedded .tension_section h4 {
+        width: auto !important;
+        height: auto !important;
+        font-size: 14px !important;
+    }
+    .module_big.embedded .tension_section ul {
+        height: 38px !important;
+        font-size: 15px !important;
+    }
+
+    /* Decorative module images (Primer rollers, Unwinder reel, etc.) shrink so the
+       parameter rows below them stay inside the panel. The Pad/Adjust images use
+       .selectable-image and must keep their size, so they're excluded. */
+    .module_big.embedded .left-container img:not(.selectable-image),
+    .module_big.embedded .padding_section img:not(.selectable-image) {
+        max-height: 78px !important;
+        width: auto !important;
+        height: auto;
+        object-fit: contain;
+    }
 </style>
 
 <div class="main_container">
@@ -436,98 +716,143 @@
                 <div id="lottie-bell"></div>
             </div>
         </div>
-        <div class="modals">
+        <div class="modals @(ActiveModuleComponent != null ? "detail-open" : "")">
+            <div class="container_modals">
+                @{
+                    var m1State = GetModuleState(nameof(ReadDTO.M1_PLC_TO_HMI_DTO));
+                    var m2State = GetModuleState(nameof(ReadDTO.M2_PLC_TO_HMI_DTO));
+                    var m4State = GetModuleState(nameof(ReadDTO.M4_PLC_TO_HMI_DTO));
+                    var m5State = GetModuleState(nameof(ReadDTO.M5_PLC_TO_HMI_DTO));
+                    var m7State = GetModuleState(nameof(ReadDTO.M7_PLC_TO_HMI_DTO));
+                }
+                <div class="module @GetModuleCardClass(nameof(ReadDTO.M1_PLC_TO_HMI_DTO))" style="@GetModuleStyle(m1State)" @onclick="() => SetActiveModule(nameof(ReadDTO.M1_PLC_TO_HMI_DTO))">
+                    <div class="section_header" style="@GetStatusStyle(m1State)">
+                        <h4>Unwinder</h4>
+                        <h5>@m1State.ToUpper()</h5>
+                    </div>
+                    <div class="image">
+                        <img src="resources/M1.jpg" width="100" height="90" />
+                        <span class="module-icon">
+                            @* Unwinder: reel with the web feeding out *@
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="8" cy="11" r="6.5" />
+                                <circle cx="8" cy="11" r="1.4" />
+                                <path d="M14.5 11 H21.5" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="card-tension">
+                        <h4>Tension</h4>
+                        <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M1_HMI_TO_PLC_DTO), nameof(M1_HMI_TO_PLC_DTO.rUnwTensionSP))">
+                            @Math.Round(ReadDTO.M1_PLC_TO_HMI_DTO.rUnwTensionPV, 1) Kg
+                        </ul>
+                    </div>
+                </div>
+                <div class="module @GetModuleCardClass(nameof(ReadDTO.M2_PLC_TO_HMI_DTO))" style="@GetModuleStyle(m2State)" @onclick="() => SetActiveModule(nameof(ReadDTO.M2_PLC_TO_HMI_DTO))">
+                    <div class="section_header" style="@GetStatusStyle(m2State)">
+                        <h4>Primer</h4>
+                        <h5>@m2State.ToUpper()</h5>
+                    </div>
+                    <div class="image">
+                        <img src="resources/M2.jpg" width="100" height="90" />
+                        <span class="module-icon">
+                            @* Primer: coating nip (two rollers) with the web running through *@
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="7.3" r="4.3" />
+                                <circle cx="12" cy="16.7" r="4.3" />
+                                <path d="M2.5 12 H21.5" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="card-tension">
+                        <h4>Tension</h4>
+                        <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M2_HMI_TO_PLC_DTO), nameof(M2_HMI_TO_PLC_DTO.rModuleTensionSP))">
+                            @Math.Round(ReadDTO.M2_PLC_TO_HMI_DTO.rChillRollTensionPV, 1) Kg
+                        </ul>
+                    </div>
+                </div>
+                <div class="module @GetModuleCardClass(nameof(ReadDTO.M4_PLC_TO_HMI_DTO))" style="@GetModuleStyle(m4State)" @onclick="() => SetActiveModule(nameof(ReadDTO.M4_PLC_TO_HMI_DTO))">
+                    <div class="section_header" style="@GetStatusStyle(m4State)">
+                        <h4>Print unit</h4>
+                        <h5>@m4State.ToUpper()</h5>
+                    </div>
+                    <div class="image">
+                        <img src="resources/M4.jpg" width="100" height="90" />
+                        <span class="module-icon">
+                            @* Print unit: inkjet printhead with jets and ink drops *@
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3.5" width="16" height="5" rx="1.6" />
+                                <path d="M8 9 V11.4 M12 9 V12.4 M16 9 V11.4" />
+                                <circle cx="8" cy="14.8" r="1.1" fill="currentColor" stroke="none" />
+                                <circle cx="12" cy="16.3" r="1.1" fill="currentColor" stroke="none" />
+                                <circle cx="16" cy="14.8" r="1.1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="card-tension">
+                        <h4>Tension</h4>
+                        <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M4_HMI_TO_PLC_DTO), nameof(M4_HMI_TO_PLC_DTO.rModuleTensionSP))">
+                            @Math.Round(ReadDTO.M4_PLC_TO_HMI_DTO.rModuleTensionFeedback, 1) Kg
+                        </ul>
+                    </div>
+                </div>
+                <div class="module @GetModuleCardClass(nameof(ReadDTO.M5_PLC_TO_HMI_DTO))" style="@GetModuleStyle(m5State)" @onclick="() => SetActiveModule(nameof(ReadDTO.M5_PLC_TO_HMI_DTO))">
+                    <div class="section_header" style="@GetStatusStyle(m5State)">
+                        <h4>White</h4>
+                        <h5>@m5State.ToUpper()</h5>
+                    </div>
+                    <div class="image">
+                        <img src="resources/M5.jpg" width="100" height="90" />
+                        <span class="module-icon">
+                            @* White (flexo): anilox roller (cells) with the doctor blade *@
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="13" r="6.8" />
+                                <path d="M15 7 L20.5 3.5" />
+                                <circle cx="9" cy="11.4" r="0.7" fill="currentColor" stroke="none" />
+                                <circle cx="12.3" cy="12.9" r="0.7" fill="currentColor" stroke="none" />
+                                <circle cx="9.6" cy="15" r="0.7" fill="currentColor" stroke="none" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="card-tension">
+                        <h4>Tension</h4>
+                        <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rModuleTensionSP))">
+                            @Math.Round(ReadDTO.M5_PLC_TO_HMI_DTO.rModuleTensionFeedback, 1) Kg
+                        </ul>
+                    </div>
+                </div>
+                <div class="module @GetModuleCardClass(nameof(ReadDTO.M7_PLC_TO_HMI_DTO))" style="@GetModuleStyle(m7State)" @onclick="() => SetActiveModule(nameof(ReadDTO.M7_PLC_TO_HMI_DTO))">
+                    <div class="section_header" style="@GetStatusStyle(m7State)">
+                        <h4>Rewinder</h4>
+                        <h5>@m7State.ToUpper()</h5>
+                    </div>
+                    <div class="image">
+                        <img src="resources/M7.jpg" width="100" height="90" />
+                        <span class="module-icon">
+                            @* Rewinder: web feeding into the reel (mirror of unwinder) *@
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="16" cy="11" r="6.5" />
+                                <circle cx="16" cy="11" r="1.4" />
+                                <path d="M9.5 11 H2.5" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="card-tension">
+                        <h4>Tension</h4>
+                        <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M7_HMI_TO_PLC_DTO), nameof(M7_HMI_TO_PLC_DTO.rRewTensionSP))">
+                            @Math.Round(ReadDTO.M7_PLC_TO_HMI_DTO.rRewTensionPV, 1) Kg
+                        </ul>
+                    </div>
+                </div>
+            </div>
             @if (ActiveModuleComponent != null)
             {
-                <div class="modal-container">
+                <div class="module-detail">
                     <DynamicComponent Type="ActiveModuleComponent" Parameters="@(new Dictionary<string, object?>
                     {
-                        { 
-                            "OnClose", EventCallback.Factory.Create(this, ComponentClosed) 
-                        }                                                             
-                    }
-                    )"/>                                                                                                                                            
-                </div>
-            }
-            @if (ActiveModuleComponent is null)
-            {
-                <div class="container_modals">
-                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M1_PLC_TO_HMI_DTO))">
-                        <div class="section_header" style="@GetStatusStyle("Ready")">
-                            <h4>Unwinder</h4>
-                            <h5>READY</h5>
-                        </div>
-                        <div class="image">
-                            <img src="resources/M1.jpg" width="100" height="90" />
-                        </div>
-                        <div class="tension_section">
-                            <h4>Tension</h4>
-                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M1_HMI_TO_PLC_DTO), nameof(M1_HMI_TO_PLC_DTO.rUnwTensionSP))">
-                                @Math.Round(ReadDTO.M1_PLC_TO_HMI_DTO.rUnwTensionPV, 1) Kg
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M2_PLC_TO_HMI_DTO))">
-                        <div class="section_header" style="@GetStatusStyle("Ready")">
-                            <h4>Primer</h4>
-                            <h5>READY</h5>
-                        </div>
-                        <div class="image">
-                            <img src="resources/M2.jpg" width="100" height="90" />
-                        </div>
-                        <div class="tension_section">
-                            <h4>Tension</h4>
-                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M2_HMI_TO_PLC_DTO), nameof(M2_HMI_TO_PLC_DTO.rModuleTensionSP))">
-                                @Math.Round(ReadDTO.M2_PLC_TO_HMI_DTO.rChillRollTensionPV, 1) Kg
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M4_PLC_TO_HMI_DTO))">
-                        <div class="section_header" style="@GetStatusStyle("Ready")">
-                            <h4>Print unit</h4>
-                            <h5>READY</h5>
-                        </div>
-                        <div class="image">
-                            <img src="resources/M4.jpg" width="100" height="90" />
-                        </div>
-                        <div class="tension_section">
-                            <h4>Tension</h4>
-                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M4_HMI_TO_PLC_DTO), nameof(M4_HMI_TO_PLC_DTO.rModuleTensionSP))">
-                                @Math.Round(ReadDTO.M4_PLC_TO_HMI_DTO.rModuleTensionFeedback, 1) Kg
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M5_PLC_TO_HMI_DTO))">
-                        <div class="section_header" style="@GetStatusStyle("Ready")">
-                            <h4>White</h4>
-                            <h5>READY</h5>
-                        </div>
-                        <div class="image">
-                            <img src="resources/M5.jpg" width="100" height="90" />
-                        </div>
-                        <div class="tension_section">
-                            <h4>Tension</h4>
-                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M5_HMI_TO_PLC_DTO), nameof(M5_HMI_TO_PLC_DTO.rModuleTensionSP))">
-                                @Math.Round(ReadDTO.M5_PLC_TO_HMI_DTO.rModuleTensionFeedback, 1) Kg
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="module" style="@GetModuleStyle("Ready")" @onclick="() => SetActiveModule(nameof(ReadDTO.M7_PLC_TO_HMI_DTO))">
-                        <div class="section_header" style="@GetStatusStyle("Ready")">
-                            <h4>Rewinder</h4>
-                            <h5>READY</h5>
-                        </div>
-                        <div class="image">
-                            <img src="resources/M7.jpg" width="100" height="90" />
-                        </div>
-                        <div class="tension_section">
-                            <h4>Tension</h4>
-                            <ul @onclick:stopPropagation="true" @onclick="() => EditTension(nameof(M7_HMI_TO_PLC_DTO), nameof(M7_HMI_TO_PLC_DTO.rRewTensionSP))">
-                                @Math.Round(ReadDTO.M7_PLC_TO_HMI_DTO.rRewTensionPV, 1) Kg
-                            </ul>
-                        </div>
-                    </div>
-
+                        { "OnClose", EventCallback.Factory.Create(this, ComponentClosed) },
+                        { "Embedded", true }
+                    })" />
                 </div>
             }
         </div>
@@ -900,26 +1225,79 @@
         _ => null
     };
 
-    private string GetModuleStyle(string status)
+    /* ---- Module status → colour, shared by cards and panel ---- */
+    private string StateColor(string status)
     {
         return status switch
         {
-            "Ready" => "border: 3px solid #039855;",
-            "Not Ready" => "border: 3px solid #DC6803;",
-            "Emergency" => "border: 3px solid #D30D3A; background: #ffcccc;",
-            _ => "border: 3px solid #039855;"
+            "Emergency" or "Calibration Fail" => "#D30D3A",        // red
+            "Not Calibrated" or "Not Ready" or "Warning" => "#DC6803", // amber
+            "Unknown" => "#6B7280",                                 // grey
+            _ => "#039855"                                          // green (operational)
         };
+    }
+
+    private string GetModuleStyle(string status)
+    {
+        var color = StateColor(status);
+        var bg = (status is "Emergency" or "Calibration Fail") ? " background: #ffcccc;" : "";
+        // --sc is consumed by the selected card's ::after bridge to draw its side borders.
+        return $"border: 3px solid {color}; --sc: {color};{bg}";
     }
 
     private string GetStatusStyle(string status)
     {
-        return status switch
+        var color = StateColor(status);
+        return $"border: 3px solid {color}; background: {color};";
+    }
+
+    /// <summary>Real state per module, mirroring each view's own status logic.</summary>
+    private string GetModuleState(string moduleDto)
+    {
+        try
         {
-            "Ready" => "border: 3px solid #039855; background: #039855",
-            "Not Ready" => "border: 3px solid #DC6803; background: #DC6803",
-            "Emergency" => "border: 3px solid #D30D3A; background: #D30D3A;",
-            _ => "border: 3px solid #039855; background: #039855"
-        };
+            if (moduleDto == nameof(ReadDTO.M1_PLC_TO_HMI_DTO))
+            {
+                if (ReadDTO.M1_PLC_TO_HMI_DTO.bUnwDancerCalibrationFail) return "Calibration Fail";
+                if (ReadDTO.M1_PLC_TO_HMI_DTO.bUnwDancerNotCalibrated) return "Not Calibrated";
+                return "Ready";
+            }
+            if (moduleDto == nameof(ReadDTO.M2_PLC_TO_HMI_DTO))
+                return GetPrimerState(ReadDTO.M2_PLC_TO_HMI_DTO.iPrimerApplicationState);
+            if (moduleDto == nameof(ReadDTO.M5_PLC_TO_HMI_DTO))
+                return GetWhiteState(ReadDTO.M5_PLC_TO_HMI_DTO.iFlexoPosState);
+            if (moduleDto == nameof(ReadDTO.M7_PLC_TO_HMI_DTO))
+            {
+                if (ReadDTO.M7_PLC_TO_HMI_DTO.bRewDancerCalibrationFail) return "Calibration Fail";
+                if (ReadDTO.M7_PLC_TO_HMI_DTO.bRewDancerNotCalibrated) return "Not Calibrated";
+                return "Ready";
+            }
+            return "Ready"; // M4 Print unit: no dynamic state yet
+        }
+        catch
+        {
+            return "Ready";
+        }
+    }
+
+    private string GetWhiteState(int s) => s switch
+    {
+        0 => "Emergency", 1 => "Stand By", 2 => "Home", 3 => "Pre Print",
+        4 => "Print", 5 => "Sleeve Change", 6 => "Moving", 7 => "Manual Adjust",
+        8 => "Set Positions", _ => "Unknown"
+    };
+
+    private string GetPrimerState(int s) => s switch
+    {
+        0 => "Emergency", 1 => "Stop", 2 => "Primer Recirculation", 3 => "Filling Water",
+        4 => "Clean Recirculation", 5 => "Emptying", 6 => "Sleeve Extraction",
+        7 => "Slow Rotation", _ => "Unknown"
+    };
+
+    private string GetModuleCardClass(string moduleName)
+    {
+        if (activeModule == null) return string.Empty;
+        return activeModule == moduleName ? "selected" : "dimmed";
     }
 
     public async ValueTask DisposeAsync()
